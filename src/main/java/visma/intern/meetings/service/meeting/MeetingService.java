@@ -1,0 +1,208 @@
+package visma.intern.meetings.service.meeting;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import visma.intern.meetings.model.atendee.Attendee;
+import visma.intern.meetings.model.meeting.Meeting;
+import visma.intern.meetings.repository.meeting.MeetingRepository;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class MeetingService {
+    private final MeetingRepository meetingRepository;
+
+    public Meeting addMeeting(Meeting meeting){
+        List<Meeting> meetings = getAllMeetings();
+        if(isUniqueMeeting(meeting) && isUniqueMeetingName(meeting)){
+            meetings.add(meeting);
+            return meetingRepository.writeMeetingData(meetings);
+        }
+        return null;
+    }
+
+    public Meeting addAttendeeToMeeting(Attendee attendee,
+                                        LocalDateTime time,
+                                        String meetingName){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        for(Meeting meeting : meetings){
+            if(meeting.getStartDate().compareTo(time) <= 0 &&
+            meeting.getEndDate().compareTo(time) >= 0
+            && meeting.getName().equalsIgnoreCase(meetingName)){
+                List<Attendee> attendees = meeting.getAttendees();
+                if(isUniqueAttendeeInMeeting(meeting, attendee) &&
+                !meeting.getResponsiblePerson()
+                        .toString().equals(attendee.toString())) {
+                    attendees.add(attendee);
+                    meeting.setAttendees(attendees);
+                    }
+                }
+            }
+        meetingRepository.writeMeetingData(meetings);
+        return null;
+    }
+
+    public void generateWarningMessage(Attendee attendee,
+                                          LocalDateTime time){
+        int personMeetingCount = 0;
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        for(Meeting meeting : meetings){
+            if(meeting.getAttendees().contains(attendee) ||
+                    meeting.getResponsiblePerson().
+                    toString().equals(attendee.toString())){
+                personMeetingCount += 1;
+            }
+        }
+        if(personMeetingCount > 1){
+            System.out.println(
+                    "Warning! This person might already be in a meeting!");
+        }
+    }
+
+    public Meeting deleteMeeting(String meetingName){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        Meeting meetingToDelete = meetings.stream().filter(meeting ->
+                meeting.getName().equalsIgnoreCase(meetingName)).toList().get(0);
+        meetings.remove(meetingToDelete);
+        meetingRepository.writeMeetingData(meetings);
+        return null;
+    }
+
+    public Meeting removePersonFromMeeting(String meetingName, Attendee attendee){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        Meeting meeting = searchMeetingByName(meetingName);
+        Attendee attendeeToRemove = null;
+        for(Meeting m : meetings){
+            if(m.toString().equals(meeting.toString())){
+                try{
+                    attendeeToRemove = m.getAttendees().stream().filter(a ->
+                        a.getId() == attendee.getId()).toList().get(0);
+                } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("No such attendee!");
+                }
+                List<Attendee> attendees = m.getAttendees();
+                if(!m.getResponsiblePerson().toString()
+                        .equals(attendee.toString())){
+                    attendees.remove(attendeeToRemove);
+                    m.setAttendees(attendees);
+                }
+            }
+        }
+        meetingRepository.writeMeetingData(meetings);
+        return null;
+    }
+
+    public Meeting searchMeetingByName(String name){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getName()
+                .equalsIgnoreCase(name)).toList().get(0);
+    }
+
+    public List<Meeting> searchByDescription(String description){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getDescription().toLowerCase()
+                .contains(description.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByResponsiblePerson(Long id){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                  meeting.getResponsiblePerson().getId() == id)
+                 .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByCategory(String cat){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getCategory().toString()
+                .equalsIgnoreCase(cat)).collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByType(String type){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getType().toString()
+                .equalsIgnoreCase(type)).collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByDate(String dateFrom){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
+
+        return meetings.stream().filter(meeting ->
+                 meeting.getStartDate().compareTo(dateFromDt) >= 0)
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByDate(String dateFrom, String dateTo){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
+        LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
+
+        return meetings.stream().filter(meeting ->
+                 meeting.getStartDate().compareTo(dateFromDt) >= 0
+                 && meeting.getEndDate().compareTo(dateToDt) <= 0)
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByDateTo(String dateTo){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
+
+        return meetings.stream().filter(meeting ->
+                 meeting.getEndDate().compareTo(dateToDt) <= 0)
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByNumberOfAttendeesFrom(int nr){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getAttendees() != null &&
+                 meeting.getAttendees().size() >= nr)
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> searchByNumberOfAttendeesTo(int nr){
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+        return meetings.stream().filter(meeting ->
+                 meeting.getAttendees() != null &&
+                 meeting.getAttendees().size() <= nr)
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> getAllMeetings(){
+        return meetingRepository.readMeetingData();
+    }
+
+    public boolean isUniqueAttendeeInMeeting(Meeting meeting,
+                                    Attendee newAttendee){
+        List<Attendee> attendees = meeting.getAttendees();
+        HashSet<String> uniqueAttendees = new HashSet<>();
+
+        attendees.forEach(a -> uniqueAttendees.add(a.toString()));
+        return uniqueAttendees.add(newAttendee.toString());
+    }
+
+    public boolean isUniqueMeeting(Meeting newMeeting){
+        HashSet<String> uniqueMeetings = new HashSet<>();
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+
+        meetings.forEach(m -> uniqueMeetings.add(m.toString()));
+        return uniqueMeetings.add(newMeeting.toString());
+    }
+
+    public boolean isUniqueMeetingName(Meeting newMeeting){
+        HashSet<String> uniqueNames = new HashSet<>();
+        List<Meeting> meetings = meetingRepository.readMeetingData();
+
+        meetings.forEach(m -> uniqueNames.add(m.getName()));
+        return uniqueNames.add(newMeeting.getName());
+    }
+}

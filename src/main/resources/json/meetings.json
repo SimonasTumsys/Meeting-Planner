@@ -1,0 +1,100 @@
+[ {
+  "name" : "mondayMorningMeeting",
+  "responsiblePerson" : {
+    "id" : 1,
+    "name" : "Albert",
+    "surname" : "Einstein",
+    "jobTitle" : "Patent Clerk"
+  },
+  "description" : "Sprint start briefing",
+  "category" : "CodeMonkey",
+  "type" : "Live",
+  "startDate" : [ 2022, 6, 6, 10, 0 ],
+  "endDate" : [ 2022, 6, 6, 11, 0 ],
+  "attendees" : [ ]
+}, {
+  "name" : "tuesdayMorningMeeting",
+  "responsiblePerson" : {
+    "id" : 2,
+    "name" : "Ayn",
+    "surname" : "Rand",
+    "jobTitle" : "Philosopher"
+  },
+  "description" : "Coffee club",
+  "category" : "TeamBuilding",
+  "type" : "InPerson",
+  "startDate" : [ 2022, 6, 7, 10, 0 ],
+  "endDate" : [ 2022, 6, 7, 11, 0 ],
+  "attendees" : [ ]
+}, {
+  "name" : "wednesdayMorningMeeting",
+  "responsiblePerson" : {
+    "id" : 3,
+    "name" : "Al",
+    "surname" : "Pacino",
+    "jobTitle" : "Actor"
+  },
+  "description" : "Coffee cappuccino drinkerino",
+  "category" : "TeamBuilding",
+  "type" : "InPerson",
+  "startDate" : [ 2022, 6, 8, 10, 0 ],
+  "endDate" : [ 2022, 6, 8, 11, 0 ],
+  "attendees" : [ ]
+}, {
+  "name" : "thursdayMorningMeeting",
+  "responsiblePerson" : {
+    "id" : 4,
+    "name" : "Barrack",
+    "surname" : "Obama",
+    "jobTitle" : "POTUS"
+  },
+  "description" : "Tips and tricks",
+  "category" : "Short",
+  "type" : "InPerson",
+  "startDate" : [ 2022, 6, 9, 10, 0 ],
+  "endDate" : [ 2022, 6, 9, 11, 0 ],
+  "attendees" : [ {
+    "id" : 6,
+    "name" : "Harley",
+    "surname" : "Davidson",
+    "jobTitle" : "Motorcycle"
+  }, {
+    "id" : 9,
+    "name" : "Marilyn",
+    "surname" : "Monroe",
+    "jobTitle" : "Actress"
+  }, {
+    "id" : 10,
+    "name" : "J.K.",
+    "surname" : "Rowling",
+    "jobTitle" : "Novelist"
+  } ]
+}, {
+  "name" : "fridayMorningMeeting",
+  "responsiblePerson" : {
+    "id" : 5,
+    "name" : "Sigmund",
+    "surname" : "Freud",
+    "jobTitle" : "Psychoanalytic"
+  },
+  "description" : "Interpretation of Dreams",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 6, 10, 10, 0 ],
+  "endDate" : [ 2022, 6, 10, 11, 0 ],
+  "attendees" : [ ]
+}, {
+  "name" : "fridayMorningMeeting2",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "jobTitle" : "Analytic psychologist"
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 6, 10, 10, 0 ],
+  "endDate" : [ 2022, 6, 10, 11, 0 ],
+  "attendees" : [ ]
+} ]
