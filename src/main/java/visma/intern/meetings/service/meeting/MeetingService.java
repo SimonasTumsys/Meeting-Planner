@@ -46,21 +46,23 @@ public class MeetingService {
         return null;
     }
 
-    public void generateWarningMessage(Attendee attendee,
-                                          LocalDateTime time){
-        int personMeetingCount = 0;
+    // if jsonObject (meeting) contains attendee,
+    // attendee.busyTimes.add({startDate, endDate}) of that meeting;
+    // if another jsonObject contains same attendee,
+    // attendee.busyTimes add another dates;
+
+    public void setAttendeeBusyTimes(){
         List<Meeting> meetings = meetingRepository.readMeetingData();
-        for(Meeting meeting : meetings){
-            if(meeting.getAttendees().contains(attendee) ||
-                    meeting.getResponsiblePerson().
-                    toString().equals(attendee.toString())){
-                personMeetingCount += 1;
-            }
-        }
-        if(personMeetingCount > 1){
-            System.out.println(
-                    "Warning! This person might already be in a meeting!");
-        }
+        meetings.forEach(meeting -> {
+            List<Attendee> attendees = meeting.getAttendees();
+            LocalDateTime[] busyTime = {meeting.getStartDate(),
+                    meeting.getEndDate()};
+            attendees.forEach(attendee -> {
+                List<LocalDateTime[]> attendeeBusyTimes = attendee.getBusyTimes();
+                attendeeBusyTimes.add(busyTime);
+                attendee.setBusyTimes(attendeeBusyTimes);
+            });
+        });
     }
 
     public Meeting deleteMeeting(String meetingName){

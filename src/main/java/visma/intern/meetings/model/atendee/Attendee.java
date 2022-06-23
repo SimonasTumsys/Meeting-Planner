@@ -2,6 +2,9 @@ package visma.intern.meetings.model.atendee;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,4 +15,5 @@ public class Attendee {
     private String name;
     private String surname;
     private String jobTitle;
+    private List<LocalDateTime[]> busyTimes;
 }
