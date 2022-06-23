@@ -1,5 +1,6 @@
 package visma.intern.meetings.controller.meeting;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,77 +24,42 @@ public class MeetingController {
         this.meetingService = meetingService;
     }
 
-    @GetMapping("/get/all")
-    public ResponseEntity<List<Meeting>> getAllMeetings() {
+    @GetMapping("/get")
+    public ResponseEntity<List<Meeting>> getFilterMeetings(
+            @RequestParam(name = "description", required = false) String desc,
+            @RequestParam(name = "resId", required = false) Long id,
+            @RequestParam(name = "category", required = false) String cat,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "dateFrom", required = false) String dateFrom,
+            @RequestParam(name = "dateTo", required = false) String dateTo,
+            @RequestParam(name = "countTo", required = false) Integer countTo,
+            @RequestParam(name = "countFrom", required = false) Integer countFrom){
         List<Meeting> meetings = meetingService.getAllMeetings();
+        if(desc != null){
+            meetings = meetingService.searchByDescription(desc, meetings);
+        }
+        if(id != null){
+            meetings = meetingService.searchByResponsiblePerson(id, meetings);
+        }
+        if(cat != null){
+            meetings = meetingService.searchByCategory(cat, meetings);
+        }
+        if(type != null){
+            meetings = meetingService.searchByType(type, meetings);
+        }
+        if(dateFrom != null){
+            meetings = meetingService.searchByDate(dateFrom, meetings);
+        }
+        if(dateTo != null){
+            meetings = meetingService.searchByDateTo(dateTo, meetings);
+        }
+        if(countFrom != null){
+            meetings = meetingService.searchByNumberOfAttendeesFrom(countFrom, meetings);
+        }
+        if(countTo != null){
+            meetings = meetingService.searchByNumberOfAttendeesTo(countTo, meetings);
+        }
         return new ResponseEntity<>(meetings, HttpStatus.OK);
-    }
-
-    @GetMapping("/get/description/{desc}")
-    public ResponseEntity<List<Meeting>> filterByDescription(
-            @PathVariable("desc") String desc){
-        return new ResponseEntity<>(
-                meetingService.searchByDescription(desc), HttpStatus.OK);
-    }
-
-    @GetMapping("/get/byResponsiblePerson/{id}")
-    public ResponseEntity<List<Meeting>> filterByResponsiblePerson(
-            @PathVariable("id") Long id){
-        return new ResponseEntity<>(
-                meetingService.searchByResponsiblePerson(id),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/category/{cat}")
-    public ResponseEntity<List<Meeting>> filterByCategory(
-            @PathVariable("cat") String cat){
-        return new ResponseEntity<>(
-                meetingService.searchByCategory(cat),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/type/{type}")
-    public ResponseEntity<List<Meeting>> filterByType(
-            @PathVariable("type") String type){
-        return new ResponseEntity<>(
-                meetingService.searchByType(type),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/date/from/{dateFrom}")
-    public ResponseEntity<List<Meeting>> filterByDateFrom(
-            @PathVariable("dateFrom") String dateFrom) {
-        return new ResponseEntity<>(meetingService.searchByDate(dateFrom),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/date/between/{dateFrom}/{dateTo}")
-    public ResponseEntity<List<Meeting>> filterByDateBetween(
-            @PathVariable("dateFrom") String dateFrom,
-            @PathVariable("dateTo") String dateTo) {
-        return new ResponseEntity<>(meetingService.searchByDate(dateFrom, dateTo),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/date/upTo/{dateTo}")
-    public ResponseEntity<List<Meeting>> filterByDateUpTo(
-            @PathVariable("dateTo") String dateTo) {
-        return new ResponseEntity<>(meetingService.searchByDateTo(dateTo),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/attendees/from/{nr}")
-    public ResponseEntity<List<Meeting>> filterByNumberOfAttendeesFrom(
-            @PathVariable("nr") int nr){
-        return new ResponseEntity<>(meetingService.searchByNumberOfAttendeesFrom(nr),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/get/attendees/to/{nr}")
-    public ResponseEntity<List<Meeting>> filterByNumberOfAttendeesTo(
-            @PathVariable("nr") int nr){
-        return new ResponseEntity<>(meetingService.searchByNumberOfAttendeesTo(nr),
-                HttpStatus.OK);
     }
 
     @PutMapping("/addAttendee/{time}/{meetingName}")

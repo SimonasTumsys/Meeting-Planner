@@ -72,62 +72,62 @@ public class MeetingControllerTest {
                 .andExpect(jsonPath("$[2].name", is("name2")));
     }
 
-    @Test
-    public void searchByDescription_success() throws Exception{
-        Mockito.when(meetingService.searchByDescription(MEETING_1.getDescription()))
-                .thenReturn(List.of(MEETING_1, MEETING_2));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/meeting/get/description/description1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$[0].name", is("name")));
-    }
-
-    @Test
-    public void searchByResponsiblePerson_success() throws Exception{
-        Mockito.when(meetingService.searchByResponsiblePerson(
-                MEETING_2.getResponsiblePerson().getId()))
-                .thenReturn(List.of(MEETING_2));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/meeting/get/byResponsiblePerson/2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$[0].name", is("name1")));
-    }
-
-    @Test
-    public void searchByCategory_success() throws Exception{
-        Mockito.when(meetingService
-                .searchByCategory(MEETING_3.getCategory()
-                        .toString().toLowerCase()))
-                .thenReturn(List.of(MEETING_3));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/meeting/get/category/teambuilding")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is("name2")));
-    }
-
-    @Test
-    public void searchByType_success() throws Exception{
-        Mockito.when(meetingService
-                        .searchByType(MEETING_1.getType()
-                                .toString().toLowerCase()))
-                .thenReturn(List.of(MEETING_1, MEETING_2, MEETING_3));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/meeting/get/type/inperson")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].name", is("name")));
-    }
+//    @Test
+//    public void searchByDescription_success() throws Exception{
+//        Mockito.when(meetingService.searchByDescription(MEETING_1.getDescription()))
+//                .thenReturn(List.of(MEETING_1, MEETING_2));
+//
+//        mockMvc.perform(MockMvcRequestBuilders
+//                .get("/meeting/get/description/description1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", notNullValue()))
+//                .andExpect(jsonPath("$[0].name", is("name")));
+//    }
+//
+//    @Test
+//    public void searchByResponsiblePerson_success() throws Exception{
+//        Mockito.when(meetingService.searchByResponsiblePerson(
+//                MEETING_2.getResponsiblePerson().getId()))
+//                .thenReturn(List.of(MEETING_2));
+//
+//        mockMvc.perform(MockMvcRequestBuilders
+//                .get("/meeting/get/byResponsiblePerson/2")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", notNullValue()))
+//                .andExpect(jsonPath("$[0].name", is("name1")));
+//    }
+//
+//    @Test
+//    public void searchByCategory_success() throws Exception{
+//        Mockito.when(meetingService
+//                .searchByCategory(MEETING_3.getCategory()
+//                        .toString().toLowerCase()))
+//                .thenReturn(List.of(MEETING_3));
+//
+//        mockMvc.perform(MockMvcRequestBuilders
+//                .get("/meeting/get/category/teambuilding")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", notNullValue()))
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(jsonPath("$[0].name", is("name2")));
+//    }
+//
+//    @Test
+//    public void searchByType_success() throws Exception{
+//        Mockito.when(meetingService
+//                        .searchByType(MEETING_1.getType()
+//                                .toString().toLowerCase()))
+//                .thenReturn(List.of(MEETING_1, MEETING_2, MEETING_3));
+//
+//        mockMvc.perform(MockMvcRequestBuilders
+//                        .get("/meeting/get/type/inperson")
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", notNullValue()))
+//                .andExpect(jsonPath("$", hasSize(3)))
+//                .andExpect(jsonPath("$[0].name", is("name")));
+//    }
 }

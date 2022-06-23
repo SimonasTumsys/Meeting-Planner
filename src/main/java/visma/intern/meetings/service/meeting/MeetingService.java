@@ -80,7 +80,7 @@ public class MeetingService {
             if(m.toString().equals(meeting.toString())){
                 try{
                     attendeeToRemove = m.getAttendees().stream().filter(a ->
-                        a.getId() == attendee.getId()).toList().get(0);
+                        a.getId().equals(attendee.getId())).toList().get(0);
                 } catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("No such attendee!");
                 }
@@ -103,37 +103,32 @@ public class MeetingService {
                 .equalsIgnoreCase(name)).toList().get(0);
     }
 
-    public List<Meeting> searchByDescription(String description){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByDescription(String description, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
                  meeting.getDescription().toLowerCase()
                 .contains(description.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByResponsiblePerson(Long id){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByResponsiblePerson(Long id, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
-                  meeting.getResponsiblePerson().getId() == id)
+                  meeting.getResponsiblePerson().getId().equals(id))
                  .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByCategory(String cat){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByCategory(String cat, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
                  meeting.getCategory().toString()
                 .equalsIgnoreCase(cat)).collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByType(String type){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByType(String type, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
                  meeting.getType().toString()
                 .equalsIgnoreCase(type)).collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByDate(String dateFrom){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings){
         LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
 
         return meetings.stream().filter(meeting ->
@@ -141,8 +136,7 @@ public class MeetingService {
                 .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByDate(String dateFrom, String dateTo){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByDate(String dateFrom, String dateTo, List<Meeting> meetings){
         LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
         LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
 
@@ -152,8 +146,7 @@ public class MeetingService {
                 .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByDateTo(String dateTo){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByDateTo(String dateTo, List<Meeting> meetings){
         LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
 
         return meetings.stream().filter(meeting ->
@@ -161,16 +154,14 @@ public class MeetingService {
                 .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByNumberOfAttendeesFrom(int nr){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByNumberOfAttendeesFrom(int nr, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
                  meeting.getAttendees() != null &&
                  meeting.getAttendees().size() >= nr)
                 .collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByNumberOfAttendeesTo(int nr){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    public List<Meeting> searchByNumberOfAttendeesTo(int nr, List<Meeting> meetings){
         return meetings.stream().filter(meeting ->
                  meeting.getAttendees() != null &&
                  meeting.getAttendees().size() <= nr)
