@@ -7,6 +7,7 @@ import visma.intern.meetings.model.meeting.Meeting;
 import visma.intern.meetings.repository.meeting.MeetingRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class MeetingService {
                 if(isUniqueAttendeeInMeeting(meeting, attendee) &&
                 !meeting.getResponsiblePerson()
                         .toString().equals(attendee.toString())) {
+                    generateWarningMessage(meetings, attendee);
                     attendees.add(attendee);
                     meeting.setAttendees(attendees);
                     }
@@ -46,20 +48,27 @@ public class MeetingService {
         return null;
     }
 
-    public void generateWarningMessage(Attendee attendee,
-                                          LocalDateTime time){
-        int personMeetingCount = 0;
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+    private void generateWarningMessage(List<Meeting> meetings,
+                                       Attendee attendee){
         for(Meeting meeting : meetings){
-            if(meeting.getAttendees().contains(attendee) ||
-                    meeting.getResponsiblePerson().
-                    toString().equals(attendee.toString())){
-                personMeetingCount += 1;
+            boolean isInMeeting = false;
+            List<Attendee> attendees = meeting.getAttendees();
+            for(Attendee a : attendees) {
+                isInMeeting = a.getId().equals(attendee.getId());
             }
-        }
-        if(personMeetingCount > 1){
-            System.out.println(
-                    "Warning! This person might already be in a meeting!");
+            if (isInMeeting){
+                String meetingName = meeting.getName();
+                String meetingStart = meeting.getStartDate().toString()
+                        .replace('T', ' ');
+                String meetingEnd = meeting.getEndDate().toString()
+                        .replace('T', ' ');
+
+                System.out.println("WARNING! " +
+                        "The person you are trying to add to this meeting " +
+                        "is already in a meeting called " + meetingName + "," +
+                        " which starts at " + meetingStart +
+                        " and ends at " + meetingEnd + ".");
+            }
         }
     }
 
@@ -128,21 +137,11 @@ public class MeetingService {
                 .equalsIgnoreCase(type)).collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings){
+    public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings) {
         LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
 
         return meetings.stream().filter(meeting ->
-                 meeting.getStartDate().compareTo(dateFromDt) >= 0)
-                .collect(Collectors.toList());
-    }
-
-    public List<Meeting> searchByDate(String dateFrom, String dateTo, List<Meeting> meetings){
-        LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
-        LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
-
-        return meetings.stream().filter(meeting ->
-                 meeting.getStartDate().compareTo(dateFromDt) >= 0
-                 && meeting.getEndDate().compareTo(dateToDt) <= 0)
+                        meeting.getStartDate().compareTo(dateFromDt) >= 0)
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,9 @@ package visma.intern.meetings.model.atendee;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
