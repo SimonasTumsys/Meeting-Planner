@@ -9,9 +9,11 @@ Things completed successfully:
 - Adding unique attendees (by pasting a JSON body)
 - OOP design
 - MVC
+- Warning message if the attendee being added is in another meeting
+
 
 Things TBD:
-- Warning message if the attendee being added is in another meeting
 - Validation so only responsible person can delete the meeting
 - Tests
+- Front-end
 
