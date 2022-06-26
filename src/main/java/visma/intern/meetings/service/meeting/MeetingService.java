@@ -7,6 +7,7 @@ import visma.intern.meetings.model.meeting.Meeting;
 import visma.intern.meetings.repository.meeting.MeetingRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class MeetingService {
                 if(isUniqueAttendeeInMeeting(meeting, attendee) &&
                 !meeting.getResponsiblePerson()
                         .toString().equals(attendee.toString())) {
+                    generateWarningMessage(meetings, attendee);
                     attendees.add(attendee);
                     meeting.setAttendees(attendees);
                     }
@@ -46,23 +48,28 @@ public class MeetingService {
         return null;
     }
 
-    // if jsonObject (meeting) contains attendee,
-    // attendee.busyTimes.add({startDate, endDate}) of that meeting;
-    // if another jsonObject contains same attendee,
-    // attendee.busyTimes add another dates;
-
-    public void setAttendeeBusyTimes(){
-        List<Meeting> meetings = meetingRepository.readMeetingData();
-        meetings.forEach(meeting -> {
+    private void generateWarningMessage(List<Meeting> meetings,
+                                       Attendee attendee){
+        for(Meeting meeting : meetings){
+            boolean isInMeeting = false;
             List<Attendee> attendees = meeting.getAttendees();
-            LocalDateTime[] busyTime = {meeting.getStartDate(),
-                    meeting.getEndDate()};
-            attendees.forEach(attendee -> {
-                List<LocalDateTime[]> attendeeBusyTimes = attendee.getBusyTimes();
-                attendeeBusyTimes.add(busyTime);
-                attendee.setBusyTimes(attendeeBusyTimes);
-            });
-        });
+            for(Attendee a : attendees) {
+                isInMeeting = a.getId().equals(attendee.getId());
+            }
+            if (isInMeeting){
+                String meetingName = meeting.getName();
+                String meetingStart = meeting.getStartDate().toString()
+                        .replace('T', ' ');
+                String meetingEnd = meeting.getEndDate().toString()
+                        .replace('T', ' ');
+
+                System.out.println("WARNING! " +
+                        "The person you are trying to add to this meeting " +
+                        "is already in a meeting called " + meetingName + "," +
+                        " which starts at " + meetingStart +
+                        " and ends at " + meetingEnd + ".");
+            }
+        }
     }
 
     public Meeting deleteMeeting(String meetingName){
@@ -130,21 +137,11 @@ public class MeetingService {
                 .equalsIgnoreCase(type)).collect(Collectors.toList());
     }
 
-    public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings){
+    public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings) {
         LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
 
         return meetings.stream().filter(meeting ->
-                 meeting.getStartDate().compareTo(dateFromDt) >= 0)
-                .collect(Collectors.toList());
-    }
-
-    public List<Meeting> searchByDate(String dateFrom, String dateTo, List<Meeting> meetings){
-        LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
-        LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
-
-        return meetings.stream().filter(meeting ->
-                 meeting.getStartDate().compareTo(dateFromDt) >= 0
-                 && meeting.getEndDate().compareTo(dateToDt) <= 0)
+                        meeting.getStartDate().compareTo(dateFromDt) >= 0)
                 .collect(Collectors.toList());
     }
 

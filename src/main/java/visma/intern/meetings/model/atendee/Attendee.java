@@ -15,5 +15,4 @@ public class Attendee {
     private String name;
     private String surname;
     private String jobTitle;
-    private List<LocalDateTime[]> busyTimes;
 }
