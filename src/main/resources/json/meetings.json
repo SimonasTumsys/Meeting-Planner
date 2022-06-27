@@ -101,5 +101,10 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : []
+  "attendees" : [ {
+    "id" : 9,
+    "name" : "Marilyn",
+    "surname" : "Monroe",
+    "jobTitle" : "Actress"
+  } ]
 } ]
