@@ -19,8 +19,7 @@ public class MeetingController {
     private final MeetingService meetingService;
 
     @Autowired
-    public MeetingController(MeetingService meetingService,
-                             MeetingRepository meetingRepository) {
+    public MeetingController(MeetingService meetingService) {
         this.meetingService = meetingService;
     }
 
