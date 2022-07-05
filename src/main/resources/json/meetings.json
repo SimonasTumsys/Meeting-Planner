@@ -4,7 +4,9 @@
     "id" : 1,
     "name" : "Albert",
     "surname" : "Einstein",
-    "jobTitle" : "Patent Clerk"
+    "jobTitle" : "Patent Clerk",
+    "email" : "albert.einstein@bit.lt",
+    "password" : "58035"
   },
   "description" : "Sprint start briefing",
   "category" : "CodeMonkey",
@@ -18,7 +20,9 @@
     "id" : 2,
     "name" : "Ayn",
     "surname" : "Rand",
-    "jobTitle" : "Philosopher"
+    "jobTitle" : "Philosopher",
+    "email" : "ayn.rand@bit.lt",
+    "password" : "34289"
   },
   "description" : "Coffee club",
   "category" : "TeamBuilding",
@@ -32,7 +36,9 @@
     "id" : 3,
     "name" : "Al",
     "surname" : "Pacino",
-    "jobTitle" : "Actor"
+    "jobTitle" : "Actor",
+    "email" : "al.pacino@bit.lt",
+    "password" : "14567"
   },
   "description" : "Coffee cappuccino drinkerino",
   "category" : "TeamBuilding",
@@ -46,65 +52,46 @@
     "id" : 4,
     "name" : "Barrack",
     "surname" : "Obama",
-    "jobTitle" : "POTUS"
+    "jobTitle" : "POTUS",
+    "email" : "barrack.obama@bit.lt",
+    "password" : "40056"
   },
   "description" : "Tips and tricks",
   "category" : "Short",
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 9, 10, 0 ],
   "endDate" : [ 2022, 6, 9, 11, 0 ],
-  "attendees" : [ {
-    "id" : 6,
-    "name" : "Harley",
-    "surname" : "Davidson",
-    "jobTitle" : "Motorcycle"
-  }, {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress"
-  }, {
-    "id" : 10,
-    "name" : "J.K.",
-    "surname" : "Rowling",
-    "jobTitle" : "Novelist"
-  } ]
+  "attendees" : []
 }, {
   "name" : "fridayMorningMeeting",
   "responsiblePerson" : {
     "id" : 5,
     "name" : "Sigmund",
     "surname" : "Freud",
-    "jobTitle" : "Psychoanalytic"
+    "jobTitle" : "Psychoanalytic",
+    "email" : "sigmund.freud@bit.lt",
+    "password" : "26851"
   },
   "description" : "Interpretation of Dreams",
   "category" : "Hub",
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress"
-  } ]
+  "attendees" : [ ]
 }, {
   "name" : "fridayMorningMeeting2",
   "responsiblePerson" : {
     "id" : 8,
     "name" : "Carl",
     "surname" : "Jung",
-    "jobTitle" : "Analytic psychologist"
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "47793"
   },
   "description" : "Archetypes",
   "category" : "Hub",
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress"
-  } ]
+  "attendees" : []
 } ]

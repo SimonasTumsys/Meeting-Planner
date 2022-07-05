@@ -1,74 +1,85 @@
-[
-  {
-    "id" : 1,
-    "name" : "Albert",
-    "surname" : "Einstein",
-    "jobTitle" : "Patent Clerk"
-  },
-  {
-    "id" : 2,
-    "name" : "Ayn",
-    "surname" : "Rand",
-    "jobTitle" : "Philosopher"
-  },
-  {
-    "id" : 3,
-    "name" : "Al",
-    "surname" : "Pacino",
-    "jobTitle" : "Actor"
-  },
-  {
-    "id" : 4,
-    "name" : "Barrack",
-    "surname" : "Obama",
-    "jobTitle" : "POTUS"
-  },
-  {
-    "id" : 5,
-    "name" : "Sigmund",
-    "surname" : "Freud",
-    "jobTitle" : "Psychoanalytic"
-  },
-  {
-    "id" : 6,
-    "name" : "Harley",
-    "surname" : "Davidson",
-    "jobTitle" : "Motorcycle"
-  },
-  {
-    "id" : 7,
-    "name" : "Galileo",
-    "surname" : "Galilei",
-    "jobTitle" : "Astronomer"
-  },
-  {
-    "id" : 8,
-    "name" : "Carl",
-    "surname" : "Jung",
-    "jobTitle" : "Analytic psychologist"
-  },
-  {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress"
-  },
-  {
-    "id" : 10,
-    "name" : "J.K.",
-    "surname" : "Rowling",
-    "jobTitle" : "Novelist"
-  },
-  {
-    "id" : 11,
-    "name" : "Theresa",
-    "surname" : "May",
-    "jobTitle" : "Prime minister"
-  },
-  {
-    "id" : 12,
-    "name" : "Marie",
-    "surname" : "Curie",
-    "jobTitle" : "Chemist"
-  }
-]
+[ {
+  "id" : 1,
+  "name" : "Albert",
+  "surname" : "Einstein",
+  "jobTitle" : "Patent Clerk",
+  "email" : "albert.einstein@bit.lt",
+  "password" : "58035"
+}, {
+  "id" : 2,
+  "name" : "Ayn",
+  "surname" : "Rand",
+  "jobTitle" : "Philosopher",
+  "email" : "ayn.rand@bit.lt",
+  "password" : "34289"
+}, {
+  "id" : 3,
+  "name" : "Al",
+  "surname" : "Pacino",
+  "jobTitle" : "Actor",
+  "email" : "al.pacino@bit.lt",
+  "password" : "14567"
+}, {
+  "id" : 4,
+  "name" : "Barrack",
+  "surname" : "Obama",
+  "jobTitle" : "POTUS",
+  "email" : "barrack.obama@bit.lt",
+  "password" : "40056"
+}, {
+  "id" : 5,
+  "name" : "Sigmund",
+  "surname" : "Freud",
+  "jobTitle" : "Psychoanalytic",
+  "email" : "sigmund.freud@bit.lt",
+  "password" : "26851"
+}, {
+  "id" : 6,
+  "name" : "Harley",
+  "surname" : "Davidson",
+  "jobTitle" : "Motorcycle",
+  "email" : "harley.davidson@bit.lt",
+  "password" : "76022"
+}, {
+  "id" : 7,
+  "name" : "Galileo",
+  "surname" : "Galilei",
+  "jobTitle" : "Astronomer",
+  "email" : "galileo.galilei@bit.lt",
+  "password" : "59697"
+}, {
+  "id" : 8,
+  "name" : "Carl",
+  "surname" : "Jung",
+  "jobTitle" : "Analytic psychologist",
+  "email" : "carl.jung@bit.lt",
+  "password" : "47793"
+}, {
+  "id" : 9,
+  "name" : "Marilyn",
+  "surname" : "Monroe",
+  "jobTitle" : "Actress",
+  "email" : "marilyn.monroe@bit.lt",
+  "password" : "7328"
+}, {
+  "id" : 10,
+  "name" : "J.K.",
+  "surname" : "Rowling",
+  "jobTitle" : "Novelist",
+  "email" : "jk.rowling@bit.lt",
+  "password" : "30201"
+}, {
+  "id" : 11,
+  "name" : "Theresa",
+  "surname" : "May",
+  "jobTitle" : "Prime minister",
+  "email" : "theresa.may@bit.lt",
+  "password" : "90405"
+}, {
+  "id" : 12,
+  "name" : "Marie",
+  "surname" : "Curie",
+  "jobTitle" : "Chemist",
+  "email" : "marie.curie@bit.lt",
+  "password" : "26376"
+} ]

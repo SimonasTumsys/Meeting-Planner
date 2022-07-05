@@ -13,24 +13,19 @@ import java.util.List;
 public class AttendeeService {
     private final AttendeeRepository attendeeRepository;
 
-    public Attendee removeAttendeeFromDb(Long id){
+    public void removeAttendeeFromDb(Long id){
         List<Attendee> attendees = getAllAttendees();
         attendees.removeIf(attendee -> attendee.getId().equals(id));
         attendeeRepository.writeAttendeeData(attendees);
-        return null;
     }
 
     public Attendee addAttendeeToDb(Attendee attendee){
         List<Attendee> attendees = getAllAttendees();
-        if(isUniqueAttendee(attendee)){
-            attendee.setId(generateSerialUniqueId(attendees));
-            attendees.add(attendee);
-            return attendeeRepository.writeAttendeeData(attendees);
-        }
-        return null;
+        attendee.setId(generateSerialUniqueId(attendees));
+        attendees.add(attendee);
+        return attendeeRepository.writeAttendeeData(attendees);
     }
 
-    //TODO solve when null
     private Long generateSerialUniqueId(List<Attendee> attendees){
         Long maxValue = Long.MIN_VALUE;
         long generatedId = 0L;
@@ -50,12 +45,20 @@ public class AttendeeService {
         return attendeeRepository.readAttendeeData();
     }
 
-    private boolean isUniqueAttendee(Attendee attendee){
-        HashSet<String> uniqueNames = new HashSet<>();
-        HashSet<String> uniqueSurnames = new HashSet<>();
-        HashSet<String> uniqueJobTitles = new HashSet<>();
-        return uniqueNames.add(attendee.getName())
-                && uniqueSurnames.add(attendee.getSurname())
-                && uniqueJobTitles.add(attendee.getJobTitle());
+    public boolean isUniqueAttendee(Attendee attendee){
+        HashSet<String> uniqueEmails = new HashSet<>();
+        for(Attendee a : getAllAttendees()){
+            uniqueEmails.add(a.getEmail());
+        }
+        return uniqueEmails.add(attendee.getEmail());
+    }
+
+    public boolean attendeeIdExists(Long id){
+        for(Attendee a : getAllAttendees()){
+            if(a.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
     }
 }
