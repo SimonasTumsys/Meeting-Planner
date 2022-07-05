@@ -62,14 +62,15 @@ public class MeetingController {
     }
 
     @PutMapping("/addAttendee/{time}/{meetingName}")
-    public ResponseEntity<Meeting> addNewAttendeeToMeeting(
+    public ResponseEntity<String> addNewAttendeeToMeeting(
             @RequestBody Attendee attendee,
             @PathVariable("time") String time,
             @PathVariable("meetingName") String meetingName){
 
         LocalDateTime timeDt = LocalDateTime.parse(time);
-        return new ResponseEntity<>(
-                meetingService.addAttendeeToMeeting(attendee, timeDt, meetingName),
+        String warningMessage =
+                meetingService.addAttendeeToMeeting(attendee, timeDt, meetingName);
+        return new ResponseEntity<>(warningMessage,
                     HttpStatus.OK);
     }
 

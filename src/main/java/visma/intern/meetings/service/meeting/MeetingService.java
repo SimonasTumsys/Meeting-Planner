@@ -25,9 +25,10 @@ public class MeetingService {
         return null;
     }
 
-    public Meeting addAttendeeToMeeting(Attendee attendee,
+    public String addAttendeeToMeeting(Attendee attendee,
                                         LocalDateTime time,
                                         String meetingName){
+        String warningMessage = null;
         List<Meeting> meetings = meetingRepository.readMeetingData();
         for(Meeting meeting : meetings){
             if(meeting.getStartDate().compareTo(time) <= 0 &&
@@ -36,39 +37,55 @@ public class MeetingService {
                 List<Attendee> attendees = meeting.getAttendees();
                 if(isUniqueAttendeeInMeeting(meeting, attendee) &&
                 !meeting.getResponsiblePerson()
-                        .toString().equals(attendee.toString())) {
-                    generateWarningMessage(meetings, attendee);
+                        .equals(attendee)) {
+                    warningMessage = generateWarningMessage(meetings, attendee);
                     attendees.add(attendee);
                     meeting.setAttendees(attendees);
                     }
                 }
             }
         meetingRepository.writeMeetingData(meetings);
-        return null;
+        return warningMessage;
     }
 
-    private void generateWarningMessage(List<Meeting> meetings,
+    public String generateWarningMessage(List<Meeting> meetings,
                                        Attendee attendee){
+        String warningMessage = "";
         for(Meeting meeting : meetings){
-            boolean isInMeeting = false;
-            List<Attendee> attendees = meeting.getAttendees();
-            for(Attendee a : attendees) {
-                isInMeeting = a.getId().equals(attendee.getId());
-            }
-            if (isInMeeting){
+            if(isInMeeting(meeting, attendee)){
                 String meetingName = meeting.getName();
                 String meetingStart = meeting.getStartDate().toString()
                         .replace('T', ' ');
                 String meetingEnd = meeting.getEndDate().toString()
                         .replace('T', ' ');
-
-                System.out.println("WARNING! " +
+                warningMessage += "WARNING! " +
                         "The person you are trying to add to this meeting " +
                         "is already in a meeting called " + meetingName + "," +
                         " which starts at " + meetingStart +
-                        " and ends at " + meetingEnd + ".");
+                        " and ends at " + meetingEnd + ".\n\n";
+                }
+            }
+        return warningMessage;
+    }
+
+    public boolean isInMeeting(Meeting meeting, Attendee attendee){
+        for(Attendee a: meeting.getAttendees()){
+            if(a.getId().equals(attendee.getId())){
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean isInMeeting(List<Meeting> meetings, Attendee attendee){
+        for(Meeting meeting : meetings){
+            for(Attendee a: meeting.getAttendees()){
+                if(a.getId().equals(attendee.getId())){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Meeting deleteMeeting(String meetingName){
@@ -85,7 +102,7 @@ public class MeetingService {
         Meeting meeting = searchMeetingByName(meetingName);
         Attendee attendeeToRemove = null;
         for(Meeting m : meetings){
-            if(m.toString().equals(meeting.toString())){
+            if(m.equals(meeting)){
                 try{
                     attendeeToRemove = m.getAttendees().stream().filter(a ->
                         a.getId().equals(attendee.getId())).toList().get(0);
@@ -93,8 +110,8 @@ public class MeetingService {
                     System.out.println("No such attendee!");
                 }
                 List<Attendee> attendees = m.getAttendees();
-                if(!m.getResponsiblePerson().toString()
-                        .equals(attendee.toString())){
+                if(!m.getResponsiblePerson()
+                        .equals(attendee)){
                     attendees.remove(attendeeToRemove);
                     m.setAttendees(attendees);
                 }

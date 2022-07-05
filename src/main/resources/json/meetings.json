@@ -61,7 +61,7 @@
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 9, 10, 0 ],
   "endDate" : [ 2022, 6, 9, 11, 0 ],
-  "attendees" : []
+  "attendees" : [ ]
 }, {
   "name" : "fridayMorningMeeting",
   "responsiblePerson" : {
@@ -77,7 +77,14 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [ {
+    "id" : 9,
+    "name" : "Marilyn",
+    "surname" : "Monroe",
+    "jobTitle" : "Actress",
+    "email" : "marilyn.monroe@bit.lt",
+    "password" : "7328"
+  } ]
 }, {
   "name" : "fridayMorningMeeting2",
   "responsiblePerson" : {
@@ -93,5 +100,12 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : []
+  "attendees" : [ {
+    "id" : 9,
+    "name" : "Marilyn",
+    "surname" : "Monroe",
+    "jobTitle" : "Actress",
+    "email" : "marilyn.monroe@bit.lt",
+    "password" : "7328"
+  } ]
 } ]
