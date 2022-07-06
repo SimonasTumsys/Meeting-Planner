@@ -84,13 +84,6 @@
     "jobTitle" : "Actress",
     "email" : "marilyn.monroe@bit.lt",
     "password" : "7328"
-  }, {
-    "id" : 11,
-    "name" : "Theresa",
-    "surname" : "May",
-    "jobTitle" : "Prime minister",
-    "email" : "theresa.may@bit.lt",
-    "password" : "90405"
   } ]
 }, {
   "name" : "fridayMorningMeeting2",
@@ -114,12 +107,5 @@
     "jobTitle" : "Actress",
     "email" : "marilyn.monroe@bit.lt",
     "password" : "7328"
-  }, {
-    "id" : 11,
-    "name" : "Theresa",
-    "surname" : "May",
-    "jobTitle" : "Prime minister",
-    "email" : "theresa.may@bit.lt",
-    "password" : "90405"
   } ]
 } ]

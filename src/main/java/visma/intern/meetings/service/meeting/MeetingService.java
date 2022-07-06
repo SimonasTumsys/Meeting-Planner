@@ -25,31 +25,54 @@ public class MeetingService {
         return null;
     }
 
-    public String addAttendeeToMeeting(Attendee attendee,
-                                        LocalDateTime time,
-                                        String meetingName){
-        String warningMessage = null;
-        List<Meeting> meetings = meetingRepository.readMeetingData();
-        for(Meeting meeting : meetings){
-            if(meeting.getStartDate().compareTo(time) <= 0 &&
-            meeting.getEndDate().compareTo(time) >= 0
-            && meeting.getName().equalsIgnoreCase(meetingName)){
-                List<Attendee> attendees = meeting.getAttendees();
-                if(isUniqueAttendeeInMeeting(meeting, attendee) &&
-                !meeting.getResponsiblePerson()
-                        .equals(attendee)) {
-                    warningMessage = generateWarningMessage(meetings, attendee);
-                    attendees.add(attendee);
-                    meeting.setAttendees(attendees);
-                    }
-                }
+    //before adding attendee, check if he's responsible in other meeting at the same time
+    //if time is overlapping, attendee cannot be added
+    //search by time: if overlapping, check if is responsible
+    // if not, can add; if is - show it in the controller too;
+
+    public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
+                                                         Meeting meetingToAddTo,
+                                                         Attendee attendeeBeingAdded){
+        String startTime = meetingToAddTo.getStartDate().toString();
+        String endTime = meetingToAddTo.getEndDate().toString();
+
+        List<Meeting> overlappingMeetings = searchByDate(startTime, allMeetings);
+        overlappingMeetings = searchByDateTo(endTime, overlappingMeetings);
+
+        for(Meeting m : overlappingMeetings){
+            if(m.getResponsiblePerson().equals(attendeeBeingAdded)){
+                return true;
             }
-        meetingRepository.writeMeetingData(meetings);
-        return warningMessage;
+        }
+        return false;
     }
 
-    public String generateWarningMessage(List<Meeting> meetings,
-                                       Attendee attendee){
+
+    // TODO match controller and service outputs, otherwise won't work
+    public Integer addAttendeeToMeeting(Attendee attendee,
+                                        String meetingName){
+        Integer output = null;
+        List<Meeting> meetings = getAllMeetings();
+        Meeting meeting = searchMeetingByName(meetingName);
+        List<Attendee> attendees = meeting.getAttendees();
+
+        if(meeting.getResponsiblePerson().equals(attendee)){
+            output = 1;
+        }
+        if(isResponsibleInOtherMeetingAtThisTime(meetings, meeting, attendee)){
+            output = 2;
+        }
+        if(isUniqueAttendeeInMeeting(meeting, attendee)) {
+            attendees.add(attendee);
+            meeting.setAttendees(attendees);
+            output = 3;
+        }
+        meetingRepository.writeMeetingData(meetings);
+        return output;
+    }
+
+    public String warningIsInAnotherMeeting(Attendee attendee){
+        List<Meeting> meetings = getAllMeetings();
         String warningMessage = "";
         for(Meeting meeting : meetings){
             if(isInMeeting(meeting, attendee)){
@@ -77,17 +100,6 @@ public class MeetingService {
         return false;
     }
 
-    public boolean isInMeeting(List<Meeting> meetings, Attendee attendee){
-        for(Meeting meeting : meetings){
-            for(Attendee a: meeting.getAttendees()){
-                if(a.getId().equals(attendee.getId())){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public Meeting deleteMeeting(String meetingName){
         List<Meeting> meetings = meetingRepository.readMeetingData();
         Meeting meetingToDelete = meetings.stream().filter(meeting ->
@@ -97,7 +109,7 @@ public class MeetingService {
         return null;
     }
 
-    public Meeting removePersonFromMeeting(String meetingName, Attendee attendee){
+    public Attendee removePersonFromMeeting(String meetingName, Long id){
         List<Meeting> meetings = meetingRepository.readMeetingData();
         Meeting meeting = searchMeetingByName(meetingName);
         Attendee attendeeToRemove = null;
@@ -105,20 +117,17 @@ public class MeetingService {
             if(m.equals(meeting)){
                 try{
                     attendeeToRemove = m.getAttendees().stream().filter(a ->
-                        a.getId().equals(attendee.getId())).toList().get(0);
+                        a.getId().equals(id)).toList().get(0);
                 } catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("No such attendee!");
                 }
                 List<Attendee> attendees = m.getAttendees();
-                if(!m.getResponsiblePerson()
-                        .equals(attendee)){
-                    attendees.remove(attendeeToRemove);
-                    m.setAttendees(attendees);
-                }
+                attendees.remove(attendeeToRemove);
+                m.setAttendees(attendees);
             }
         }
         meetingRepository.writeMeetingData(meetings);
-        return null;
+        return attendeeToRemove;
     }
 
     public Meeting searchMeetingByName(String name){
