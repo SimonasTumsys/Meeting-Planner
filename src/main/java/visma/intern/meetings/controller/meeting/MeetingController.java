@@ -1,13 +1,11 @@
 package visma.intern.meetings.controller.meeting;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import visma.intern.meetings.model.atendee.Attendee;
 import visma.intern.meetings.model.meeting.Meeting;
-import visma.intern.meetings.repository.meeting.MeetingRepository;
 import visma.intern.meetings.service.meeting.MeetingService;
 
 import java.time.LocalDateTime;
@@ -70,8 +68,18 @@ public class MeetingController {
         LocalDateTime timeDt = LocalDateTime.parse(time);
         String warningMessage =
                 meetingService.addAttendeeToMeeting(attendee, timeDt, meetingName);
-        return new ResponseEntity<>(warningMessage,
-                    HttpStatus.OK);
+        if(warningMessage != null){
+            if(!warningMessage.equals("")){
+                return new ResponseEntity<>(warningMessage,
+                            HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>("Attendee you are trying to add " +
+                    "is already in this meeting",
+                    HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("New attendee added successfully",
+                HttpStatus.OK);
     }
 
     @PostMapping("/add")

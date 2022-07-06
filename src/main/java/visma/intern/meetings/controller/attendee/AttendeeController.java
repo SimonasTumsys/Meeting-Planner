@@ -34,7 +34,7 @@ public class AttendeeController {
                     "The attendee was successfully added to the database",
                     HttpStatus.OK);
         }
-        return new ResponseEntity<>("Attendee with this e-mail is" +
+        return new ResponseEntity<>("Attendee with this e-mail is " +
                 "already in the database", HttpStatus.BAD_REQUEST);
     }
 
