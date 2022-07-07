@@ -13,7 +13,7 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 6, 10, 0 ],
   "endDate" : [ 2022, 6, 6, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : []
 }, {
   "name" : "tuesdayMorningMeeting",
   "responsiblePerson" : {
@@ -29,7 +29,7 @@
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 7, 10, 0 ],
   "endDate" : [ 2022, 6, 7, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : []
 }, {
   "name" : "wednesdayMorningMeeting",
   "responsiblePerson" : {
@@ -45,7 +45,7 @@
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 8, 10, 0 ],
   "endDate" : [ 2022, 6, 8, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : []
 }, {
   "name" : "thursdayMorningMeeting",
   "responsiblePerson" : {

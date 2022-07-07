@@ -37,11 +37,8 @@ public class MeetingService {
     public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
                                                          Meeting meetingToAddTo,
                                                          Attendee attendeeBeingAdded){
-        String startTime = meetingToAddTo.getStartDate().toString();
-        String endTime = meetingToAddTo.getEndDate().toString();
-
-        List<Meeting> overlappingMeetings = searchByDate(startTime, allMeetings);
-        overlappingMeetings = searchByDateTo(endTime, overlappingMeetings);
+        List<Meeting> overlappingMeetings =
+                getOverlappingMeetings(allMeetings, meetingToAddTo);
 
         for(Meeting m : overlappingMeetings){
             if(m.getResponsiblePerson().equals(attendeeBeingAdded)){
@@ -49,6 +46,15 @@ public class MeetingService {
             }
         }
         return false;
+    }
+
+    public List<Meeting> getOverlappingMeetings(List<Meeting> allMeetings,
+                                                Meeting meetingToAddTo){
+        String startTime = meetingToAddTo.getStartDate().toString();
+        String endTime = meetingToAddTo.getEndDate().toString();
+        List<Meeting> overlappingMeetings = searchByDate(startTime, allMeetings);
+        overlappingMeetings = searchByDateTo(endTime, overlappingMeetings);
+        return overlappingMeetings;
     }
 
     public void addAttendeeAfterChecks(Attendee attendee,
@@ -65,11 +71,15 @@ public class MeetingService {
         meetingRepository.writeMeetingData(meetings);
     }
 
-    public String warningIsInAnotherMeeting(Attendee attendee){
+    public String warningIsInAnotherMeeting(Attendee attendee,
+                                            String meetingToAddToName){
         List<Meeting> meetings = getAllMeetings();
+        Meeting meetingToAddTo = searchMeetingByName(meetingToAddToName);
         String warningMessage = "Attendee added succesfully! ";
-        for(Meeting meeting : meetings){
-            if(isInMeeting(meeting, attendee)){
+        List<Meeting> overlappingMeetings =
+                getOverlappingMeetings(meetings, meetingToAddTo);
+        for(Meeting meeting : overlappingMeetings){
+            if (isInMeeting(meeting, attendee)) {
                 String meetingName = meeting.getName();
                 String meetingStart = meeting.getStartDate().toString()
                         .replace('T', ' ');

@@ -80,7 +80,7 @@ public class MeetingController {
             }
             case 3 -> {
                 String warningMessage = meetingService.
-                        warningIsInAnotherMeeting(attendee);
+                        warningIsInAnotherMeeting(attendee, meetingName);
                 meetingService.addAttendeeAfterChecks(attendee, meetingName);
                 return new ResponseEntity<>(warningMessage, HttpStatus.OK);
             }
