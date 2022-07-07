@@ -61,7 +61,14 @@
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 9, 10, 0 ],
   "endDate" : [ 2022, 6, 9, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [ {
+    "id" : 12,
+    "name" : "Marie",
+    "surname" : "Curie",
+    "jobTitle" : "Chemist",
+    "email" : "marie.curie@bit.lt",
+    "password" : "26376"
+  } ]
 }, {
   "name" : "fridayMorningMeeting",
   "responsiblePerson" : {
@@ -77,7 +84,14 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [ {
+    "id" : 12,
+    "name" : "Marie",
+    "surname" : "Curie",
+    "jobTitle" : "Chemist",
+    "email" : "marie.curie@bit.lt",
+    "password" : "26376"
+  } ]
 }, {
   "name" : "fridayMorningMeeting2",
   "responsiblePerson" : {
@@ -93,5 +107,12 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [ {
+    "id" : 12,
+    "name" : "Marie",
+    "surname" : "Curie",
+    "jobTitle" : "Chemist",
+    "email" : "marie.curie@bit.lt",
+    "password" : "26376"
+  } ]
 } ]

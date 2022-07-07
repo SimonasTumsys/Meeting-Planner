@@ -79,7 +79,8 @@ public class MeetingController {
                     HttpStatus.FORBIDDEN);
             }
             case 3 -> {
-                String warningMessage = meetingService.warningIsInAnotherMeeting(attendee);
+                String warningMessage = meetingService.
+                        warningIsInAnotherMeeting(attendee);
                 meetingService.addAttendeeAfterChecks(attendee, meetingName);
                 return new ResponseEntity<>(warningMessage, HttpStatus.OK);
             }
