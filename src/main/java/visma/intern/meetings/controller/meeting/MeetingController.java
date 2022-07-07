@@ -8,7 +8,6 @@ import visma.intern.meetings.model.atendee.Attendee;
 import visma.intern.meetings.model.meeting.Meeting;
 import visma.intern.meetings.service.meeting.MeetingService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -59,27 +58,36 @@ public class MeetingController {
         return new ResponseEntity<>(meetings, HttpStatus.OK);
     }
 
-    @PutMapping("/addAttendee/{time}/{meetingName}")
+    @PutMapping("/addAttendee/{meetingName}")
     public ResponseEntity<String> addNewAttendeeToMeeting(
             @RequestBody Attendee attendee,
-            @PathVariable("time") String time,
             @PathVariable("meetingName") String meetingName){
 
-        LocalDateTime timeDt = LocalDateTime.parse(time);
-        String warningMessage =
-                meetingService.addAttendeeToMeeting(attendee, timeDt, meetingName);
-        if(warningMessage != null){
-            if(!warningMessage.equals("")){
-                return new ResponseEntity<>(warningMessage,
-                            HttpStatus.OK);
-            }
-        } else {
-            return new ResponseEntity<>("Attendee you are trying to add " +
-                    "is already in this meeting",
+        int responseIndicator =
+                meetingService.getResponseIndicator(attendee, meetingName);
+
+        switch (responseIndicator){
+            case 1 -> {
+                return new ResponseEntity<>("Cannot add this attendee" +
+                    " because he/she is responsible for this meeting",
                     HttpStatus.FORBIDDEN);
+            }
+            case 2 -> {
+                return new ResponseEntity<>("Cannot add this attendee" +
+                    " because he/she is responsible for another meeting, which is" +
+                    " overlapping with this one",
+                    HttpStatus.FORBIDDEN);
+            }
+            case 3 -> {
+                String warningMessage = meetingService.warningIsInAnotherMeeting(attendee);
+                meetingService.addAttendeeAfterChecks(attendee, meetingName);
+                return new ResponseEntity<>(warningMessage, HttpStatus.OK);
+            }
+            default -> {
+                return new ResponseEntity<>("The person you are trying to add" +
+                        " is already in this meeting", HttpStatus.FORBIDDEN);
+            }
         }
-        return new ResponseEntity<>("New attendee added successfully",
-                HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -100,10 +108,13 @@ public class MeetingController {
     }
 
     @PutMapping("/removeAttendee/{meetingName}")
-    public ResponseEntity<Meeting> removePersonFromMeeting(
+    public ResponseEntity<Attendee> removePersonFromMeeting(
             @PathVariable("meetingName") String name,
-            @RequestBody Attendee attendee){
-        return new ResponseEntity<>(
-                meetingService.removePersonFromMeeting(name, attendee), HttpStatus.OK);
+            @RequestParam(name = "attendeeId") Long id){
+        Attendee removedAttendee = meetingService.removePersonFromMeeting(name, id);
+        if(removedAttendee != null){
+            return new ResponseEntity<>(removedAttendee, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
     }
 }

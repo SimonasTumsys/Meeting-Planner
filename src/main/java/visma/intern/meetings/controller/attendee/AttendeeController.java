@@ -38,8 +38,6 @@ public class AttendeeController {
                 "already in the database", HttpStatus.BAD_REQUEST);
     }
 
-    //865755663 - Mindaugas
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> removeAttendeeFromDb(
             @PathVariable("id") Long id){

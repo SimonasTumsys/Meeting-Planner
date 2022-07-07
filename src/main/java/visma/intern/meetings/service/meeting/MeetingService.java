@@ -16,41 +16,58 @@ import java.util.stream.Collectors;
 public class MeetingService {
     private final MeetingRepository meetingRepository;
 
-    public Meeting addMeeting(Meeting meeting){
+    public int getResponseIndicator(Attendee attendee,
+                                    String meetingName){
         List<Meeting> meetings = getAllMeetings();
-        if(isUniqueMeeting(meeting) && isUniqueMeetingName(meeting)){
-            meetings.add(meeting);
-            return meetingRepository.writeMeetingData(meetings);
+        Meeting meeting = searchMeetingByName(meetingName);
+
+        if(meeting.getResponsiblePerson().equals(attendee)){
+            return 1;
         }
-        return null;
+        if(isResponsibleInOtherMeetingAtThisTime(meetings,
+                meeting, attendee)){
+            return 2;
+        }
+        if(isUniqueAttendeeInMeeting(meeting, attendee)) {
+            return 3;
+        }
+        return 0;
     }
 
-    public String addAttendeeToMeeting(Attendee attendee,
-                                        LocalDateTime time,
-                                        String meetingName){
-        String warningMessage = null;
-        List<Meeting> meetings = meetingRepository.readMeetingData();
-        for(Meeting meeting : meetings){
-            if(meeting.getStartDate().compareTo(time) <= 0 &&
-            meeting.getEndDate().compareTo(time) >= 0
-            && meeting.getName().equalsIgnoreCase(meetingName)){
-                List<Attendee> attendees = meeting.getAttendees();
-                if(isUniqueAttendeeInMeeting(meeting, attendee) &&
-                !meeting.getResponsiblePerson()
-                        .equals(attendee)) {
-                    warningMessage = generateWarningMessage(meetings, attendee);
-                    attendees.add(attendee);
-                    meeting.setAttendees(attendees);
-                    }
-                }
+    public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
+                                                         Meeting meetingToAddTo,
+                                                         Attendee attendeeBeingAdded){
+        String startTime = meetingToAddTo.getStartDate().toString();
+        String endTime = meetingToAddTo.getEndDate().toString();
+
+        List<Meeting> overlappingMeetings = searchByDate(startTime, allMeetings);
+        overlappingMeetings = searchByDateTo(endTime, overlappingMeetings);
+
+        for(Meeting m : overlappingMeetings){
+            if(m.getResponsiblePerson().equals(attendeeBeingAdded)){
+                return true;
             }
-        meetingRepository.writeMeetingData(meetings);
-        return warningMessage;
+        }
+        return false;
     }
 
-    public String generateWarningMessage(List<Meeting> meetings,
-                                       Attendee attendee){
-        String warningMessage = "";
+    public void addAttendeeAfterChecks(Attendee attendee,
+                                         String meetingName){
+        List<Meeting> meetings = getAllMeetings();
+        for(Meeting meeting : meetings){
+            if(meetingName.equals(meeting.getName())){
+                List<Attendee> attendees = meeting.getAttendees();
+                attendees.add(attendee);
+                meeting.setAttendees(attendees);
+                break;
+            }
+        }
+        meetingRepository.writeMeetingData(meetings);
+    }
+
+    public String warningIsInAnotherMeeting(Attendee attendee){
+        List<Meeting> meetings = getAllMeetings();
+        String warningMessage = "Attendee added succesfully! ";
         for(Meeting meeting : meetings){
             if(isInMeeting(meeting, attendee)){
                 String meetingName = meeting.getName();
@@ -62,7 +79,7 @@ public class MeetingService {
                         "The person you are trying to add to this meeting " +
                         "is already in a meeting called " + meetingName + "," +
                         " which starts at " + meetingStart +
-                        " and ends at " + meetingEnd + ".\n\n";
+                        " and ends at " + meetingEnd + ".\n";
                 }
             }
         return warningMessage;
@@ -77,15 +94,13 @@ public class MeetingService {
         return false;
     }
 
-    public boolean isInMeeting(List<Meeting> meetings, Attendee attendee){
-        for(Meeting meeting : meetings){
-            for(Attendee a: meeting.getAttendees()){
-                if(a.getId().equals(attendee.getId())){
-                    return true;
-                }
-            }
+    public Meeting addMeeting(Meeting meeting){
+        List<Meeting> meetings = getAllMeetings();
+        if(isUniqueMeeting(meeting) && isUniqueMeetingName(meeting)){
+            meetings.add(meeting);
+            return meetingRepository.writeMeetingData(meetings);
         }
-        return false;
+        return null;
     }
 
     public Meeting deleteMeeting(String meetingName){
@@ -97,7 +112,7 @@ public class MeetingService {
         return null;
     }
 
-    public Meeting removePersonFromMeeting(String meetingName, Attendee attendee){
+    public Attendee removePersonFromMeeting(String meetingName, Long id){
         List<Meeting> meetings = meetingRepository.readMeetingData();
         Meeting meeting = searchMeetingByName(meetingName);
         Attendee attendeeToRemove = null;
@@ -105,20 +120,17 @@ public class MeetingService {
             if(m.equals(meeting)){
                 try{
                     attendeeToRemove = m.getAttendees().stream().filter(a ->
-                        a.getId().equals(attendee.getId())).toList().get(0);
+                        a.getId().equals(id)).toList().get(0);
                 } catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("No such attendee!");
                 }
                 List<Attendee> attendees = m.getAttendees();
-                if(!m.getResponsiblePerson()
-                        .equals(attendee)){
-                    attendees.remove(attendeeToRemove);
-                    m.setAttendees(attendees);
-                }
+                attendees.remove(attendeeToRemove);
+                m.setAttendees(attendees);
             }
         }
         meetingRepository.writeMeetingData(meetings);
-        return null;
+        return attendeeToRemove;
     }
 
     public Meeting searchMeetingByName(String name){

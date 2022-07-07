@@ -77,21 +77,7 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress",
-    "email" : "marilyn.monroe@bit.lt",
-    "password" : "7328"
-  }, {
-    "id" : 11,
-    "name" : "Theresa",
-    "surname" : "May",
-    "jobTitle" : "Prime minister",
-    "email" : "theresa.may@bit.lt",
-    "password" : "90405"
-  } ]
+  "attendees" : [ ]
 }, {
   "name" : "fridayMorningMeeting2",
   "responsiblePerson" : {
@@ -107,19 +93,5 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ {
-    "id" : 9,
-    "name" : "Marilyn",
-    "surname" : "Monroe",
-    "jobTitle" : "Actress",
-    "email" : "marilyn.monroe@bit.lt",
-    "password" : "7328"
-  }, {
-    "id" : 11,
-    "name" : "Theresa",
-    "surname" : "May",
-    "jobTitle" : "Prime minister",
-    "email" : "theresa.may@bit.lt",
-    "password" : "90405"
-  } ]
+  "attendees" : [ ]
 } ]
