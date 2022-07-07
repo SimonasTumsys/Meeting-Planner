@@ -16,19 +16,23 @@ import java.util.stream.Collectors;
 public class MeetingService {
     private final MeetingRepository meetingRepository;
 
-    public Meeting addMeeting(Meeting meeting){
+    public int getResponseIndicator(Attendee attendee,
+                                    String meetingName){
         List<Meeting> meetings = getAllMeetings();
-        if(isUniqueMeeting(meeting) && isUniqueMeetingName(meeting)){
-            meetings.add(meeting);
-            return meetingRepository.writeMeetingData(meetings);
-        }
-        return null;
-    }
+        Meeting meeting = searchMeetingByName(meetingName);
 
-    //before adding attendee, check if he's responsible in other meeting at the same time
-    //if time is overlapping, attendee cannot be added
-    //search by time: if overlapping, check if is responsible
-    // if not, can add; if is - show it in the controller too;
+        if(meeting.getResponsiblePerson().equals(attendee)){
+            return 1;
+        }
+        if(isResponsibleInOtherMeetingAtThisTime(meetings,
+                meeting, attendee)){
+            return 2;
+        }
+        if(isUniqueAttendeeInMeeting(meeting, attendee)) {
+            return 3;
+        }
+        return 0;
+    }
 
     public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
                                                          Meeting meetingToAddTo,
@@ -47,33 +51,23 @@ public class MeetingService {
         return false;
     }
 
-
-    // TODO match controller and service outputs, otherwise won't work
-    public Integer addAttendeeToMeeting(Attendee attendee,
-                                        String meetingName){
-        Integer output = null;
+    public void addAttendeeAfterChecks(Attendee attendee,
+                                         String meetingName){
         List<Meeting> meetings = getAllMeetings();
-        Meeting meeting = searchMeetingByName(meetingName);
-        List<Attendee> attendees = meeting.getAttendees();
-
-        if(meeting.getResponsiblePerson().equals(attendee)){
-            output = 1;
-        }
-        if(isResponsibleInOtherMeetingAtThisTime(meetings, meeting, attendee)){
-            output = 2;
-        }
-        if(isUniqueAttendeeInMeeting(meeting, attendee)) {
-            attendees.add(attendee);
-            meeting.setAttendees(attendees);
-            output = 3;
+        for(Meeting meeting : meetings){
+            if(meetingName.equals(meeting.getName())){
+                List<Attendee> attendees = meeting.getAttendees();
+                attendees.add(attendee);
+                meeting.setAttendees(attendees);
+                break;
+            }
         }
         meetingRepository.writeMeetingData(meetings);
-        return output;
     }
 
     public String warningIsInAnotherMeeting(Attendee attendee){
         List<Meeting> meetings = getAllMeetings();
-        String warningMessage = "";
+        String warningMessage = "Attendee added succesfully! ";
         for(Meeting meeting : meetings){
             if(isInMeeting(meeting, attendee)){
                 String meetingName = meeting.getName();
@@ -85,7 +79,7 @@ public class MeetingService {
                         "The person you are trying to add to this meeting " +
                         "is already in a meeting called " + meetingName + "," +
                         " which starts at " + meetingStart +
-                        " and ends at " + meetingEnd + ".\n\n";
+                        " and ends at " + meetingEnd + ".\n";
                 }
             }
         return warningMessage;
@@ -98,6 +92,15 @@ public class MeetingService {
             }
         }
         return false;
+    }
+
+    public Meeting addMeeting(Meeting meeting){
+        List<Meeting> meetings = getAllMeetings();
+        if(isUniqueMeeting(meeting) && isUniqueMeetingName(meeting)){
+            meetings.add(meeting);
+            return meetingRepository.writeMeetingData(meetings);
+        }
+        return null;
     }
 
     public Meeting deleteMeeting(String meetingName){

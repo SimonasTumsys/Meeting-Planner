@@ -8,7 +8,6 @@ import visma.intern.meetings.model.atendee.Attendee;
 import visma.intern.meetings.model.meeting.Meeting;
 import visma.intern.meetings.service.meeting.MeetingService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -64,28 +63,29 @@ public class MeetingController {
             @RequestBody Attendee attendee,
             @PathVariable("meetingName") String meetingName){
 
-        Integer responseIndicator =
-                meetingService.addAttendeeToMeeting(attendee, meetingName);
+        int responseIndicator =
+                meetingService.getResponseIndicator(attendee, meetingName);
 
         switch (responseIndicator){
             case 1 -> {
                 return new ResponseEntity<>("Cannot add this attendee" +
                     " because he/she is responsible for this meeting",
-                    HttpStatus.EXPECTATION_FAILED);
+                    HttpStatus.FORBIDDEN);
             }
             case 2 -> {
                 return new ResponseEntity<>("Cannot add this attendee" +
                     " because he/she is responsible for another meeting, which is" +
                     " overlapping with this one",
-                    HttpStatus.EXPECTATION_FAILED);
+                    HttpStatus.FORBIDDEN);
             }
             case 3 -> {
                 String warningMessage = meetingService.warningIsInAnotherMeeting(attendee);
-                meetingService.addAttendeeToMeeting(attendee, meetingName);
+                meetingService.addAttendeeAfterChecks(attendee, meetingName);
                 return new ResponseEntity<>(warningMessage, HttpStatus.OK);
             }
             default -> {
-                return new ResponseEntity<>("Except nachuui", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("The person you are trying to add" +
+                        " is already in this meeting", HttpStatus.FORBIDDEN);
             }
         }
     }
@@ -107,7 +107,6 @@ public class MeetingController {
                     meetingService.deleteMeeting(meetingName), HttpStatus.OK);
     }
 
-    // idk if returning attendee is good in this case
     @PutMapping("/removeAttendee/{meetingName}")
     public ResponseEntity<Attendee> removePersonFromMeeting(
             @PathVariable("meetingName") String name,
