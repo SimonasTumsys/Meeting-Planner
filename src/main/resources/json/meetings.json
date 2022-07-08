@@ -1,4 +1,5 @@
 [ {
+  "id" : 1,
   "name" : "mondayMorningMeeting",
   "responsiblePerson" : {
     "id" : 1,
@@ -15,6 +16,7 @@
   "endDate" : [ 2022, 6, 6, 11, 0 ],
   "attendees" : [ ]
 }, {
+  "id" : 2,
   "name" : "tuesdayMorningMeeting",
   "responsiblePerson" : {
     "id" : 2,
@@ -31,6 +33,7 @@
   "endDate" : [ 2022, 6, 7, 11, 0 ],
   "attendees" : [ ]
 }, {
+  "id" : 3,
   "name" : "wednesdayMorningMeeting",
   "responsiblePerson" : {
     "id" : 3,
@@ -47,6 +50,7 @@
   "endDate" : [ 2022, 6, 8, 11, 0 ],
   "attendees" : [ ]
 }, {
+  "id" : 4,
   "name" : "thursdayMorningMeeting",
   "responsiblePerson" : {
     "id" : 4,
@@ -63,6 +67,7 @@
   "endDate" : [ 2022, 6, 9, 11, 0 ],
   "attendees" : [ ]
 }, {
+  "id" : 5,
   "name" : "fridayMorningMeeting",
   "responsiblePerson" : {
     "id" : 5,
@@ -79,6 +84,7 @@
   "endDate" : [ 2022, 6, 10, 11, 0 ],
   "attendees" : [ ]
 }, {
+  "id" : 6,
   "name" : "fridayMorningMeeting2",
   "responsiblePerson" : {
     "id" : 8,
@@ -93,15 +99,9 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ {
-    "id" : 7,
-    "name" : "Galileo",
-    "surname" : "Galilei",
-    "jobTitle" : "Astronomer",
-    "email" : "galileo.galilei@bit.lt",
-    "password" : "59697"
-  } ]
+  "attendees" : [ ]
 }, {
+  "id" : 7,
   "name" : "fridayMorningMeeting3",
   "responsiblePerson" : {
     "id" : 12,
@@ -116,12 +116,5 @@
   "type" : "InPerson",
   "startDate" : [ 2022, 6, 10, 10, 30 ],
   "endDate" : [ 2022, 6, 10, 11, 30 ],
-  "attendees" : [ {
-    "id" : 7,
-    "name" : "Galileo",
-    "surname" : "Galilei",
-    "jobTitle" : "Astronomer",
-    "email" : "galileo.galilei@bit.lt",
-    "password" : "59697"
-  } ]
+  "attendees" : [ ]
 } ]
