@@ -86,9 +86,10 @@ public class MeetingService {
                 String meetingEnd = meeting.getEndDate().toString()
                         .replace('T', ' ');
                 warningMessage += "WARNING! " +
-                        "The person you are trying to add to this meeting " +
-                        "is already in a meeting called " + meetingName + "," +
-                        " which starts at " + meetingStart +
+                        "The person you added to this meeting " +
+                        "is already in a meeting overlapping with this one," +
+                        " which is called " + meetingName + "." +
+                        " It starts at " + meetingStart +
                         " and ends at " + meetingEnd + ".\n";
                 }
             }
@@ -177,17 +178,15 @@ public class MeetingService {
 
     public List<Meeting> searchByDate(String dateFrom, List<Meeting> meetings) {
         LocalDateTime dateFromDt = LocalDateTime.parse(dateFrom);
-
         return meetings.stream().filter(meeting ->
-                        meeting.getStartDate().compareTo(dateFromDt) >= 0)
+                        meeting.getEndDate().compareTo(dateFromDt) >= 0)
                 .collect(Collectors.toList());
     }
 
     public List<Meeting> searchByDateTo(String dateTo, List<Meeting> meetings){
         LocalDateTime dateToDt = LocalDateTime.parse(dateTo);
-
         return meetings.stream().filter(meeting ->
-                 meeting.getEndDate().compareTo(dateToDt) <= 0)
+                 meeting.getStartDate().compareTo(dateToDt) <= 0)
                 .collect(Collectors.toList());
     }
 
@@ -219,16 +218,14 @@ public class MeetingService {
     }
 
     public boolean isUniqueMeeting(Meeting newMeeting){
-        HashSet<String> uniqueMeetings = new HashSet<>();
-        List<Meeting> meetings = meetingRepository.readMeetingData();
-
-        meetings.forEach(m -> uniqueMeetings.add(m.toString()));
-        return uniqueMeetings.add(newMeeting.toString());
+        List<Meeting> meetings = getAllMeetings();
+        HashSet<Meeting> uniqueMeetings = new HashSet<>(meetings);
+        return uniqueMeetings.add(newMeeting);
     }
 
     public boolean isUniqueMeetingName(Meeting newMeeting){
         HashSet<String> uniqueNames = new HashSet<>();
-        List<Meeting> meetings = meetingRepository.readMeetingData();
+        List<Meeting> meetings = getAllMeetings();
 
         meetings.forEach(m -> uniqueNames.add(m.getName()));
         return uniqueNames.add(newMeeting.getName());
