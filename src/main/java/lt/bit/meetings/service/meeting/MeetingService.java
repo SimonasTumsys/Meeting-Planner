@@ -128,7 +128,7 @@ public class MeetingService {
         meetings.add(meeting);
         meetingRepository.writeMeetingData(meetings);
     }
-
+    //TODO
     public int getResponseIndicatorForAddingMeetings(Meeting meetingToAdd,
                                                      List <Meeting> allMeetings){
         if(isResponsibleInOtherMeetingAtThisTime(allMeetings, meetingToAdd)){

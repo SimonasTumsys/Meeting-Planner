@@ -111,20 +111,21 @@ public class MeetingController {
                         HttpStatus.OK);
             }
             case 0 -> {
-
+                //TODO
             }
             default -> {
-
+                //TODO
             }
         }
         return null;
     }
 
     @DeleteMapping("/delete/{meetingId}")
-    public ResponseEntity<Meeting> deleteMeeting(
+    public ResponseEntity<String> deleteMeeting(
             @PathVariable("meetingId") Long meetingId){
+        meetingService.deleteMeeting(meetingId);
             return new ResponseEntity<>(
-                    meetingService.deleteMeeting(meetingId), HttpStatus.OK);
+                   "Meeting deleted successfully", HttpStatus.OK);
     }
 
     @PutMapping("/removeAttendee/{meetingId}")

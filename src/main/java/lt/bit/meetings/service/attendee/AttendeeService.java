@@ -1,9 +1,10 @@
 package lt.bit.meetings.service.attendee;
 
 import lombok.AllArgsConstructor;
-import lt.bit.meetings.repository.attendee.AttendeeRepository;
-import org.springframework.stereotype.Service;
 import lt.bit.meetings.model.atendee.Attendee;
+import lt.bit.meetings.repository.attendee.AttendeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,18 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AttendeeService {
+    @Autowired
     private final AttendeeRepository attendeeRepository;
+
+    public Attendee getAttendeeByEmail(String email){
+        List<Attendee> attendees = attendeeRepository.readAttendeeData();
+        for(Attendee attendee : attendees){
+            if(email.equalsIgnoreCase(attendee.getEmail())){
+                return attendee;
+            }
+        }
+        return null;
+    }
 
     public void removeAttendeeFromDb(Long id){
         List<Attendee> attendees = getAllAttendees();
@@ -45,7 +57,7 @@ public class AttendeeService {
         return attendeeRepository.readAttendeeData();
     }
 
-    public boolean isUniqueAttendee(Attendee attendee){
+    public boolean isUniqueAttendeeEmail(Attendee attendee){
         HashSet<String> uniqueEmails = new HashSet<>();
         for(Attendee a : getAllAttendees()){
             uniqueEmails.add(a.getEmail());

@@ -28,7 +28,7 @@ public class AttendeeController {
     @PostMapping("/add")
     public ResponseEntity<String> addNewAttendeeToDb(
             @RequestBody Attendee attendee){
-        if(attendeeService.isUniqueAttendee(attendee)) {
+        if(attendeeService.isUniqueAttendeeEmail(attendee)) {
             Attendee newAttendee = attendeeService.addAttendeeToDb(attendee);
             return new ResponseEntity<>(
                     "The attendee was successfully added to the database",

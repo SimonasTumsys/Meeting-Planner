@@ -26,51 +26,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(MeetingController.class)
 public class MeetingControllerTest {
-    @Autowired
-    MockMvc mockMvc;
-    @Autowired
-    ObjectMapper mapper;
-
-    @MockBean
-    MeetingRepository meetingRepository;
-    @MockBean
-    MeetingService meetingService;
-
-    LocalDateTime dateTime = LocalDateTime.parse("2022-06-10T10:00:00");
-    LocalDateTime dateTime1 = LocalDateTime.parse("2022-06-10T11:00:00");
-
-    Attendee ATTENDEE_1 = new Attendee(1L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_2 = new Attendee(2L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_3 = new Attendee(3L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_4 = new Attendee(4L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_5 = new Attendee(5L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_6 = new Attendee(6L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_7 = new Attendee(7L,"name","surname","jt", "email", "pass");
-    Attendee ATTENDEE_8 = new Attendee(8L,"name","surname","jt", "email", "pass");
-
-    Meeting MEETING_1 = new Meeting(1L, "name",ATTENDEE_1,"description1",
-            Category.HUB, Type.IN_PERSON, dateTime, dateTime1, new ArrayList<>());
-    Meeting MEETING_2 = new Meeting(2L, "name1",ATTENDEE_2,"description1",
-            Category.CODE_MONKEY, Type.IN_PERSON, dateTime, dateTime1, List.of(ATTENDEE_5,
-            ATTENDEE_6, ATTENDEE_7, ATTENDEE_8));
-    Meeting MEETING_3 = new Meeting(3L, "name2",ATTENDEE_3,"description",
-            Category.TEAM_BUILDING, Type.IN_PERSON, dateTime, dateTime1, List.of(ATTENDEE_1,
-            ATTENDEE_2));
-
-    @Test
-    public void getAllMeetings_success() throws Exception{
-        List<Meeting> meetings = List.of(
-                MEETING_1, MEETING_2, MEETING_3);
-
-        Mockito.when(meetingService.getAllMeetings()).thenReturn(meetings);
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/meeting/get/all")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[2].name", is("name2")));
-    }
+//    @Autowired
+//    MockMvc mockMvc;
+//    @Autowired
+//    ObjectMapper mapper;
+//
+//    @MockBean
+//    MeetingRepository meetingRepository;
+//    @MockBean
+//    MeetingService meetingService;
+//
+//    LocalDateTime dateTime = LocalDateTime.parse("2022-06-10T10:00:00");
+//    LocalDateTime dateTime1 = LocalDateTime.parse("2022-06-10T11:00:00");
+//
+//    Attendee ATTENDEE_1 = new Attendee(1L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_2 = new Attendee(2L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_3 = new Attendee(3L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_4 = new Attendee(4L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_5 = new Attendee(5L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_6 = new Attendee(6L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_7 = new Attendee(7L,"name","surname","jt", "email", "pass");
+//    Attendee ATTENDEE_8 = new Attendee(8L,"name","surname","jt", "email", "pass");
+//
+//    Meeting MEETING_1 = new Meeting(1L, "name",ATTENDEE_1,"description1",
+//            Category.HUB, Type.IN_PERSON, dateTime, dateTime1, new ArrayList<>());
+//    Meeting MEETING_2 = new Meeting(2L, "name1",ATTENDEE_2,"description1",
+//            Category.CODE_MONKEY, Type.IN_PERSON, dateTime, dateTime1, List.of(ATTENDEE_5,
+//            ATTENDEE_6, ATTENDEE_7, ATTENDEE_8));
+//    Meeting MEETING_3 = new Meeting(3L, "name2",ATTENDEE_3,"description",
+//            Category.TEAM_BUILDING, Type.IN_PERSON, dateTime, dateTime1, List.of(ATTENDEE_1,
+//            ATTENDEE_2));
+//
+//    @Test
+//    public void getAllMeetings_success() throws Exception{
+//        List<Meeting> meetings = List.of(
+//                MEETING_1, MEETING_2, MEETING_3);
+//
+//        Mockito.when(meetingService.getAllMeetings()).thenReturn(meetings);
+//
+//        mockMvc.perform(MockMvcRequestBuilders
+//                .get("/meeting/get/all")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(3)))
+//                .andExpect(jsonPath("$[2].name", is("name2")));
+//    }
 
 //    @Test
 //    public void searchByDescription_success() throws Exception{
