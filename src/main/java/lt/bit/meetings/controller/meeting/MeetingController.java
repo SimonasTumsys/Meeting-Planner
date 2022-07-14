@@ -134,7 +134,7 @@ public class MeetingController {
             @PathVariable("meetingId") Long meetingId,
             @RequestParam(name = "attendeeId") Long attendeeId){
         boolean success =
-                meetingService.removePersonFromMeeting(meetingId, attendeeId);
+                meetingService.removeAttendeeFromMeeting(meetingId, attendeeId);
         if(success){
             return new ResponseEntity<>("Attendee removed successfully",
                     HttpStatus.OK);

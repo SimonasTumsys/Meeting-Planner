@@ -16,22 +16,33 @@ import java.util.stream.Collectors;
 public class MeetingService {
     private final MeetingRepository meetingRepository;
 
-    public String getResponseIndicatorForAddingAttendees(Attendee attendee,
+    public String getResponseIndicatorForAddingAttendees(Attendee attendeeBeingAdded,
                                                       Long meetingId){
-        List<Meeting> meetings = getAllMeetings();
-        Meeting meeting = getMeetingById(meetingId);
+        List<Meeting> allMeetings = getAllMeetings();
+        Meeting meetingToAddTo = getMeetingById(meetingId);
 
-        if(attendee.equals(meeting.getResponsiblePerson())){
+        if(attendeeBeingAdded.equals(meetingToAddTo.getResponsiblePerson())){
             return "responsibleInThisMeeting";
         }
-        if(isResponsibleInOtherMeetingAtThisTime(meetings,
-                meeting, attendee)){
+        if(isResponsibleInOtherMeetingAtThisTime(allMeetings,
+                meetingToAddTo, attendeeBeingAdded)){
             return "responsibleInAnotherMeetingNow";
         }
-        if(isUniqueAttendeeInMeeting(meeting, attendee)) {
+        if(isUniqueAttendeeInMeeting(meetingToAddTo, attendeeBeingAdded)) {
             return "success";
         }
         return "notUniqueAttendee";
+    }
+
+    public String getResponseIndicatorForAddingMeetings(Meeting meetingBeingAdded,
+                                                     List <Meeting> allMeetings){
+        if(isResponsibleInOtherMeetingAtThisTime(allMeetings, meetingBeingAdded)){
+            return "isResponsibleInOtherMeetingNow";
+        }
+        if(isUniqueMeetingName(meetingBeingAdded)){
+            return "success";
+        }
+        return "notUniqueName";
     }
 
     public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
@@ -71,19 +82,6 @@ public class MeetingService {
         return overlappingMeetings;
     }
 
-    public void addAttendeeAfterChecks(Attendee attendee,
-                                         Long meetingId){
-        List<Meeting> meetings = getAllMeetings();
-        for(Meeting meeting : meetings){
-            if(meetingId.equals(meeting.getId())){
-                List<Attendee> attendees = meeting.getAttendees();
-                attendees.add(attendee);
-                meeting.setAttendees(attendees);
-                break;
-            }
-        }
-        meetingRepository.writeMeetingData(meetings);
-    }
 
     public String warningIsInAnotherMeeting(Attendee attendee,
                                             Long meetingId){
@@ -121,25 +119,28 @@ public class MeetingService {
 
     public void addMeetingAfterChecks(Meeting meeting){
         List<Meeting> meetings = getAllMeetings();
-        meeting.setId(generateUniqueSerialMeetingId(meetings));
+        meeting.setId(meeting
+                .generateUniqueSerialMeetingId(meetings));
         meetings.add(meeting);
         meetingRepository.writeMeetingData(meetings);
     }
 
-    public String getResponseIndicatorForAddingMeetings(Meeting meetingToAdd,
-                                                     List <Meeting> allMeetings){
-        if(isResponsibleInOtherMeetingAtThisTime(allMeetings, meetingToAdd)){
-            return "isResponsibleInOtherMeetingNow";
+    public void addAttendeeAfterChecks(Attendee attendee,
+                                         Long meetingId){
+        List<Meeting> meetings = getAllMeetings();
+        for(Meeting meeting : meetings){
+            if(meetingId.equals(meeting.getId())){
+                List<Attendee> attendees = meeting.getAttendees();
+                attendees.add(attendee);
+                meeting.setAttendees(attendees);
+                break;
+            }
         }
-        if(isUniqueMeetingName(meetingToAdd)){
-            return "success";
-        }
-        return "notUniqueName";
+        meetingRepository.writeMeetingData(meetings);
     }
 
     public boolean deleteMeeting(Long id){
         List<Meeting> meetings = getAllMeetings();
-        boolean success = false;
         for(Meeting meeting: meetings){
             if (id.equals(meeting.getId())){
                 return meetings.remove(meeting);
@@ -149,7 +150,7 @@ public class MeetingService {
         return false;
     }
 
-    public boolean removePersonFromMeeting(Long meetingId, Long id){
+    public boolean removeAttendeeFromMeeting(Long meetingId, Long id){
         List<Meeting> meetings = getAllMeetings();
         Meeting meeting = getMeetingById(meetingId);
         boolean success = false;
@@ -256,20 +257,4 @@ public class MeetingService {
         meetings.forEach(m -> uniqueNames.add(m.getName()));
         return uniqueNames.add(newMeeting.getName());
     }
-
-    private Long generateUniqueSerialMeetingId(List<Meeting> meetings){
-        Long maxValue = Long.MIN_VALUE;
-        long generatedId = 0L;
-        if(meetings.size() > 0){
-            for (Meeting meeting : meetings) {
-                if (meeting.getId()
-                        .compareTo(maxValue) > 0) {
-                    maxValue = meeting.getId();
-                }
-            }
-            generatedId = maxValue + 1;
-        }
-        return generatedId;
-    }
-
 }
