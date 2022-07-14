@@ -7,7 +7,7 @@
     "surname" : "Einstein",
     "jobTitle" : "Patent Clerk",
     "email" : "albert.einstein@bit.lt",
-    "password" : "58035"
+    "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu"
   },
   "description" : "Sprint start briefing",
   "category" : "CodeMonkey",
@@ -24,7 +24,7 @@
     "surname" : "Rand",
     "jobTitle" : "Philosopher",
     "email" : "ayn.rand@bit.lt",
-    "password" : "34289"
+    "password" : "$2a$10$ta5l2688V7ZI6NDRDUJMQeICYSSDIiPq4ujtJyhOJ6zV.mdXnGu8G"
   },
   "description" : "Coffee club",
   "category" : "TeamBuilding",
@@ -41,7 +41,7 @@
     "surname" : "Pacino",
     "jobTitle" : "Actor",
     "email" : "al.pacino@bit.lt",
-    "password" : "14567"
+    "password" : "$2a$10$FvKaKYMkIv8N7COlZvNQ8ecakyddYt5HcPnJmTr9gwc3kojyXCz6S"
   },
   "description" : "Coffee cappuccino drinkerino",
   "category" : "TeamBuilding",
@@ -58,7 +58,7 @@
     "surname" : "Obama",
     "jobTitle" : "POTUS",
     "email" : "barrack.obama@bit.lt",
-    "password" : "40056"
+    "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG"
   },
   "description" : "Tips and tricks",
   "category" : "Short",
@@ -75,7 +75,7 @@
     "surname" : "Freud",
     "jobTitle" : "Psychoanalytic",
     "email" : "sigmund.freud@bit.lt",
-    "password" : "26851"
+    "password" : "$2a$10$iZS8BC2eQY1VaTBGI/A7uu71RkgH27l89/CYoB4BxsmZaPAakobQq"
   },
   "description" : "Interpretation of Dreams",
   "category" : "Hub",
@@ -92,7 +92,7 @@
     "surname" : "Jung",
     "jobTitle" : "Analytic psychologist",
     "email" : "carl.jung@bit.lt",
-    "password" : "47793"
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK"
   },
   "description" : "Archetypes",
   "category" : "Hub",
@@ -109,7 +109,7 @@
     "surname" : "Curie",
     "jobTitle" : "Chemist",
     "email" : "marie.curie@bit.lt",
-    "password" : "26376"
+    "password" : "$2a$10$c44z4ki.7OyEYImCdgPD6.Xlr35W83Dx8/o7zKqYaNEno57tbqrB."
   },
   "description" : "Foosball and chill",
   "category" : "Short",
