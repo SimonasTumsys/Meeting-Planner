@@ -1,9 +1,11 @@
 package lt.bit.meetings.model.meeting.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Category {
     CODE_MONKEY("CodeMonkey"),
     HUB("Hub"),
@@ -11,10 +13,6 @@ public enum Category {
     TEAM_BUILDING("TeamBuilding");
 
     private final String catCode;
-
-    Category(final String category) {
-        this.catCode = category;
-    }
 
     @JsonCreator
     public static Category getCategoryFromCode(String value){

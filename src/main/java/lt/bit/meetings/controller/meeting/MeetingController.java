@@ -63,22 +63,22 @@ public class MeetingController {
             @RequestBody Attendee attendee,
             @PathVariable("meetingId") Long meetingId){
 
-        int responseIndicator =
+        String responseIndicator =
                 meetingService.getResponseIndicatorForAddingAttendees(attendee, meetingId);
 
         switch (responseIndicator){
-            case 1 -> {
+            case "responsibleInThisMeeting" -> {
                 return new ResponseEntity<>("Cannot add this attendee" +
                     " because he/she is responsible for this meeting",
                     HttpStatus.FORBIDDEN);
             }
-            case 2 -> {
+            case "responsibleInAnotherMeetingNow" -> {
                 return new ResponseEntity<>("Cannot add this attendee" +
                     " because he/she is responsible for another meeting, which is" +
                     " overlapping with this one",
                     HttpStatus.FORBIDDEN);
             }
-            case 3 -> {
+            case "success" -> {
                 String warningMessage = meetingService.
                         warningIsInAnotherMeeting(attendee, meetingId);
                 meetingService.addAttendeeAfterChecks(attendee, meetingId);
@@ -89,43 +89,44 @@ public class MeetingController {
                         " is already in this meeting", HttpStatus.FORBIDDEN);
             }
         }
+
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addNewMeeting(
                         @RequestBody Meeting meetingToAdd){
         List<Meeting> allMeetings = meetingService.getAllMeetings();
-        int responseIndicator =
+        String responseIndicator =
                 meetingService.getResponseIndicatorForAddingMeetings(
                         meetingToAdd, allMeetings);
         switch(responseIndicator){
-            case 1 -> {
+            case "isResponsibleInOtherMeetingNow" -> {
                 return new ResponseEntity<>("Failed. The responsible person " +
                         "of this meeting is responsible for another meeting " +
                         "that is overlapping with this one",
-                        HttpStatus.EXPECTATION_FAILED);
+                        HttpStatus.FORBIDDEN);
             }
-            case 2 -> {
+            case "success" -> {
                 meetingService.addMeetingAfterChecks(meetingToAdd);
                 return new ResponseEntity<>("Meeting added successfully!",
                         HttpStatus.OK);
             }
-            case 0 -> {
-                //TODO
-            }
             default -> {
-                //TODO
+                return new ResponseEntity<>("Meeting with this name already exists",
+                        HttpStatus.FORBIDDEN);
             }
         }
-        return null;
     }
 
     @DeleteMapping("/delete/{meetingId}")
     public ResponseEntity<String> deleteMeeting(
             @PathVariable("meetingId") Long meetingId){
-        meetingService.deleteMeeting(meetingId);
+        boolean success = meetingService.deleteMeeting(meetingId);
+        if(success){
             return new ResponseEntity<>(
                    "Meeting deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("No such meeting!", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/removeAttendee/{meetingId}")
@@ -139,6 +140,6 @@ public class MeetingController {
                     HttpStatus.OK);
         }
         return new ResponseEntity<>("No such attendee in this meeting!",
-                HttpStatus.EXPECTATION_FAILED);
+                HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,19 +1,16 @@
 package lt.bit.meetings.model.meeting.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-
+@AllArgsConstructor
 public enum Type {
     LIVE("Live"),
     IN_PERSON("InPerson");
 
     private final String typeCode;
-
-    Type(final String type){
-        this.typeCode = type;
-    }
 
     @JsonCreator
     public static Type getTypeFromCode(String value){

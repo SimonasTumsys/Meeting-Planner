@@ -2,6 +2,8 @@ package lt.bit.meetings.model.atendee;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,4 +17,5 @@ public class Attendee {
     private String jobTitle;
     private String email;
     private String password;
+//    private Set<Group> group;
 }

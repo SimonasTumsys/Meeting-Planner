@@ -16,22 +16,22 @@ import java.util.stream.Collectors;
 public class MeetingService {
     private final MeetingRepository meetingRepository;
 
-    public int getResponseIndicatorForAddingAttendees(Attendee attendee,
+    public String getResponseIndicatorForAddingAttendees(Attendee attendee,
                                                       Long meetingId){
         List<Meeting> meetings = getAllMeetings();
         Meeting meeting = getMeetingById(meetingId);
 
         if(attendee.equals(meeting.getResponsiblePerson())){
-            return 1;
+            return "responsibleInThisMeeting";
         }
         if(isResponsibleInOtherMeetingAtThisTime(meetings,
                 meeting, attendee)){
-            return 2;
+            return "responsibleInAnotherMeetingNow";
         }
         if(isUniqueAttendeeInMeeting(meeting, attendee)) {
-            return 3;
+            return "success";
         }
-        return 0;
+        return "notUniqueAttendee";
     }
 
     public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
@@ -119,37 +119,34 @@ public class MeetingService {
         return false;
     }
 
-    // check if the responsible person is responsible for any other meeting
-    // overlapping with the meeting being added. If not, let add. If this person
-    // is in another meeting (but not responsible), show warning message.
-
     public void addMeetingAfterChecks(Meeting meeting){
         List<Meeting> meetings = getAllMeetings();
+        meeting.setId(generateUniqueSerialMeetingId(meetings));
         meetings.add(meeting);
         meetingRepository.writeMeetingData(meetings);
     }
-    //TODO
-    public int getResponseIndicatorForAddingMeetings(Meeting meetingToAdd,
+
+    public String getResponseIndicatorForAddingMeetings(Meeting meetingToAdd,
                                                      List <Meeting> allMeetings){
         if(isResponsibleInOtherMeetingAtThisTime(allMeetings, meetingToAdd)){
-            return 1;
+            return "isResponsibleInOtherMeetingNow";
         }
         if(isUniqueMeetingName(meetingToAdd)){
-            return 2;
+            return "success";
         }
-        return 0;
+        return "notUniqueName";
     }
 
-    public Meeting deleteMeeting(Long id){
+    public boolean deleteMeeting(Long id){
         List<Meeting> meetings = getAllMeetings();
+        boolean success = false;
         for(Meeting meeting: meetings){
             if (id.equals(meeting.getId())){
-                meetings.remove(meeting);
-                break;
+                return meetings.remove(meeting);
             }
         }
         meetingRepository.writeMeetingData(meetings);
-        return null;
+        return false;
     }
 
     public boolean removePersonFromMeeting(Long meetingId, Long id){

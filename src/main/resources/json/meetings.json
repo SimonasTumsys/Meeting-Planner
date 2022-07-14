@@ -100,21 +100,4 @@
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
   "attendees" : [ ]
-}, {
-  "id" : 7,
-  "name" : "fridayMorningMeeting3",
-  "responsiblePerson" : {
-    "id" : 12,
-    "name" : "Marie",
-    "surname" : "Curie",
-    "jobTitle" : "Chemist",
-    "email" : "marie.curie@bit.lt",
-    "password" : "$2a$10$c44z4ki.7OyEYImCdgPD6.Xlr35W83Dx8/o7zKqYaNEno57tbqrB."
-  },
-  "description" : "Foosball and chill",
-  "category" : "Short",
-  "type" : "InPerson",
-  "startDate" : [ 2022, 6, 10, 10, 30 ],
-  "endDate" : [ 2022, 6, 10, 11, 30 ],
-  "attendees" : [ ]
 } ]
