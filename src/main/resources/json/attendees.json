@@ -4,82 +4,82 @@
   "surname" : "Einstein",
   "jobTitle" : "Patent Clerk",
   "email" : "albert.einstein@bit.lt",
-  "password" : "58035"
+  "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu"
 }, {
   "id" : 2,
   "name" : "Ayn",
   "surname" : "Rand",
   "jobTitle" : "Philosopher",
   "email" : "ayn.rand@bit.lt",
-  "password" : "34289"
+  "password" : "$2a$10$ta5l2688V7ZI6NDRDUJMQeICYSSDIiPq4ujtJyhOJ6zV.mdXnGu8G"
 }, {
   "id" : 3,
   "name" : "Al",
   "surname" : "Pacino",
   "jobTitle" : "Actor",
   "email" : "al.pacino@bit.lt",
-  "password" : "14567"
+  "password" : "$2a$10$FvKaKYMkIv8N7COlZvNQ8ecakyddYt5HcPnJmTr9gwc3kojyXCz6S"
 }, {
   "id" : 4,
   "name" : "Barrack",
   "surname" : "Obama",
   "jobTitle" : "POTUS",
   "email" : "barrack.obama@bit.lt",
-  "password" : "40056"
+  "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG"
 }, {
   "id" : 5,
   "name" : "Sigmund",
   "surname" : "Freud",
   "jobTitle" : "Psychoanalytic",
   "email" : "sigmund.freud@bit.lt",
-  "password" : "26851"
+  "password" : "$2a$10$iZS8BC2eQY1VaTBGI/A7uu71RkgH27l89/CYoB4BxsmZaPAakobQq"
 }, {
   "id" : 6,
   "name" : "Harley",
   "surname" : "Davidson",
   "jobTitle" : "Motorcycle",
   "email" : "harley.davidson@bit.lt",
-  "password" : "76022"
+  "password" : "$2a$10$PnUOH1siGnSxLvP9p8cTlenn5505U3lnUPw.y0Yt3hcFbICirIUSG"
 }, {
   "id" : 7,
   "name" : "Galileo",
   "surname" : "Galilei",
   "jobTitle" : "Astronomer",
   "email" : "galileo.galilei@bit.lt",
-  "password" : "59697"
+  "password" : "$2a$10$rj8GYRI475cBVLc9PMtIdehllOhPBR3UyjuTdWkWyvuC9Bf9E1Ulq"
 }, {
   "id" : 8,
   "name" : "Carl",
   "surname" : "Jung",
   "jobTitle" : "Analytic psychologist",
   "email" : "carl.jung@bit.lt",
-  "password" : "47793"
+  "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK"
 }, {
   "id" : 9,
   "name" : "Marilyn",
   "surname" : "Monroe",
   "jobTitle" : "Actress",
   "email" : "marilyn.monroe@bit.lt",
-  "password" : "7328"
+  "password" : "$2a$10$/LjVyXsboxNMAwHhnDg5XehCxOUKYGAjBY5YAOSr138c.LIzpbAyi"
 }, {
   "id" : 10,
   "name" : "J.K.",
   "surname" : "Rowling",
   "jobTitle" : "Novelist",
   "email" : "jk.rowling@bit.lt",
-  "password" : "30201"
+  "password" : "$2a$10$kkLxgjqsXiDppbvId32nMeACw0Wa1RrpZ3kL7ASmUvHrLf1OgRjDu"
 }, {
   "id" : 11,
   "name" : "Theresa",
   "surname" : "May",
   "jobTitle" : "Prime minister",
   "email" : "theresa.may@bit.lt",
-  "password" : "90405"
+  "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi"
 }, {
   "id" : 12,
   "name" : "Marie",
   "surname" : "Curie",
   "jobTitle" : "Chemist",
   "email" : "marie.curie@bit.lt",
-  "password" : "26376"
+  "password" : "$2a$10$c44z4ki.7OyEYImCdgPD6.Xlr35W83Dx8/o7zKqYaNEno57tbqrB."
 } ]
