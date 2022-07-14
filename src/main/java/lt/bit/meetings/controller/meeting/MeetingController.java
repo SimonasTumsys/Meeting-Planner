@@ -89,7 +89,6 @@ public class MeetingController {
                         " is already in this meeting", HttpStatus.FORBIDDEN);
             }
         }
-
     }
 
     @PostMapping("/add")

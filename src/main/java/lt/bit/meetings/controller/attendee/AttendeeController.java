@@ -1,5 +1,6 @@
 package lt.bit.meetings.controller.attendee;
 
+import lt.bit.meetings.exception.AttendeeNotFoundInDatabaseException;
 import lt.bit.meetings.model.atendee.Attendee;
 import lt.bit.meetings.service.attendee.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/attendee")

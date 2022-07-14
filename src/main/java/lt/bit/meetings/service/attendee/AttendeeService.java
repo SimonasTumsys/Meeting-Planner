@@ -15,8 +15,19 @@ public class AttendeeService {
     @Autowired
     private final AttendeeRepository attendeeRepository;
 
+    public Attendee getAttendeeById(Long id) {
+        if(attendeeIdExists(id)){
+            for(Attendee attendee : getAllAttendees()){
+                if(id.equals(attendee.getId())){
+                    return attendee;
+                }
+            }
+        }
+        return null;
+    }
+
     public Attendee getAttendeeByEmail(String email){
-        List<Attendee> attendees = attendeeRepository.readAttendeeData();
+        List<Attendee> attendees = getAllAttendees();
         for(Attendee attendee : attendees){
             if(email.equalsIgnoreCase(attendee.getEmail())){
                 return attendee;
@@ -33,24 +44,10 @@ public class AttendeeService {
 
     public Attendee addAttendeeToDb(Attendee attendee){
         List<Attendee> attendees = getAllAttendees();
-        attendee.setId(generateSerialUniqueAttendeeId(attendees));
+        attendee.setId(attendee
+                .generateSerialUniqueAttendeeId(attendees));
         attendees.add(attendee);
         return attendeeRepository.writeAttendeeData(attendees);
-    }
-
-    private Long generateSerialUniqueAttendeeId(List<Attendee> attendees){
-        Long maxValue = Long.MIN_VALUE;
-        long generatedId = 0L;
-        if(attendees.size() > 0){
-            for (Attendee attendee : attendees) {
-                if (attendee.getId()
-                        .compareTo(maxValue) > 0) {
-                    maxValue = attendee.getId();
-                }
-            }
-            generatedId = maxValue + 1;
-        }
-        return generatedId;
     }
 
     public List<Attendee> getAllAttendees(){

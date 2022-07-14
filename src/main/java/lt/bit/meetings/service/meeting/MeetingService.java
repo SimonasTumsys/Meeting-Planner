@@ -171,6 +171,8 @@ public class MeetingService {
         return success;
     }
 
+    //TODO get all attendees in meeting
+
     public Meeting getMeetingByName(String name){
         List<Meeting> meetings = getAllMeetings();
         return meetings.stream().filter(meeting ->
