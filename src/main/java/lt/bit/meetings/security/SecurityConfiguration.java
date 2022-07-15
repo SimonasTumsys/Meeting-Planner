@@ -30,6 +30,10 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
+//                .antMatchers("/meeting/delete/*")
+//                .hasAnyRole("RESPONSIBLE_PERSON")
+                .antMatchers("/meeting/**", "/attendee/**")
+                .hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -38,16 +42,16 @@ public class SecurityConfiguration {
                     .passwordParameter("password")
                     .permitAll()
                 .and()
+                .authorizeRequests()
+                .and()
                 .logout().invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/logout-success").permitAll();
+                    .logoutSuccessUrl("/logout-success").permitAll()
+                .and()
+                .httpBasic();
         return http.build();
     }
-
-
-
-
 }
 
 

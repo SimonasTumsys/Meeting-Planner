@@ -1,8 +1,10 @@
 package lt.bit.meetings.model.atendee;
 
 import lombok.*;
+import lt.bit.meetings.security.ApplicationUserRole;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class Attendee {
     private String jobTitle;
     private String email;
     private String password;
-//    private Set<Group> group;
+    private Set<ApplicationUserRole> userRoles;
 
     public Long generateSerialUniqueAttendeeId(List<Attendee> attendees){
         Long maxValue = Long.MIN_VALUE;

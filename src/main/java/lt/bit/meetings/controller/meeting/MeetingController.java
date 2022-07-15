@@ -117,6 +117,13 @@ public class MeetingController {
         }
     }
 
+    //http error 5--
+
+    //role su parametrais
+    //savo roles implementacija
+    //priima userId meetingId
+    //tikrina ar u responsible
+    // ir jei yra - leisti trinti.
     @DeleteMapping("/delete/{meetingId}")
     public ResponseEntity<String> deleteMeeting(
             @PathVariable("meetingId") Long meetingId){

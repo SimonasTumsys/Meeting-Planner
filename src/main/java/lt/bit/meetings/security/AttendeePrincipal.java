@@ -9,6 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+
+
+// NOT USED RN
+
+
 @AllArgsConstructor
 public class AttendeePrincipal implements UserDetails {
 
