@@ -30,16 +30,27 @@ public class AttendeeDetailsService implements UserDetailsService {
          if(attendee == null){
              throw new UsernameNotFoundException(email);
          }
-        return User.withUsername(attendee.getEmail())
-                .password(attendee.getPassword())
-                .authorities(getAuthorities(attendee)).build();
+         UserDetails u = User.withUsername(attendee.getEmail())
+                 .password(attendee.getPassword())
+                 .authorities(getAllAuthoritiesFromRoles(attendee)).build();
+        System.out.println(u.getAuthorities());
+        return u;
     }
 
-    private Collection<GrantedAuthority> getAuthorities(Attendee attendee){
+//    private Collection<GrantedAuthority> getAuthorities(Attendee attendee){
+//        Set<ApplicationUserRole> userRoles = attendee.getUserRoles();
+//        Collection<GrantedAuthority> authorities = new ArrayList<>();
+//        for(ApplicationUserRole role : userRoles){
+//            authorities.add(new SimpleGrantedAuthority(role.name()));
+//        }
+//        return authorities;
+//    }
+
+    private Collection<GrantedAuthority> getAllAuthoritiesFromRoles(Attendee attendee){
         Set<ApplicationUserRole> userRoles = attendee.getUserRoles();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         for(ApplicationUserRole role : userRoles){
-            authorities.add(new SimpleGrantedAuthority(role.name()));
+            authorities.addAll(role.getGrantedAuthorities());
         }
         return authorities;
     }

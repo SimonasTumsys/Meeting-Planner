@@ -105,5 +105,13 @@
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [{
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles": []
+  } ]
 } ]

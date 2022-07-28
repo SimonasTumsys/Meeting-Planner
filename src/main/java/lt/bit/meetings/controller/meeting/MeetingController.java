@@ -5,6 +5,7 @@ import lt.bit.meetings.model.meeting.Meeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import lt.bit.meetings.service.meeting.MeetingService;
 
@@ -21,6 +22,7 @@ public class MeetingController {
     }
 
     @GetMapping("/get")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_RESPONSIBLEPERSON')")
     public ResponseEntity<List<Meeting>> getFilterMeetings(
             @RequestParam(name = "description", required = false) String desc,
             @RequestParam(name = "resId", required = false) Long resId,
@@ -59,6 +61,7 @@ public class MeetingController {
     }
 
     @PutMapping("/addAttendee/{meetingId}")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> addNewAttendeeToMeeting(
             @RequestBody Attendee attendee,
             @PathVariable("meetingId") Long meetingId){
@@ -92,6 +95,7 @@ public class MeetingController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> addNewMeeting(
                         @RequestBody Meeting meetingToAdd){
         List<Meeting> allMeetings = meetingService.getAllMeetings();
@@ -125,6 +129,7 @@ public class MeetingController {
     //tikrina ar u responsible
     // ir jei yra - leisti trinti.
     @DeleteMapping("/delete/{meetingId}")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> deleteMeeting(
             @PathVariable("meetingId") Long meetingId){
         boolean success = meetingService.deleteMeeting(meetingId);
@@ -136,6 +141,7 @@ public class MeetingController {
     }
 
     @PutMapping("/removeAttendee/{meetingId}")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> removePersonFromMeeting(
             @PathVariable("meetingId") Long meetingId,
             @RequestParam(name = "attendeeId") Long attendeeId){
