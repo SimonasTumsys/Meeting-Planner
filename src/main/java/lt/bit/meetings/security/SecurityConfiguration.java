@@ -1,116 +1,73 @@
 package lt.bit.meetings.security;
 
+import lt.bit.meetings.security.jwt.JwtFilter;
+import lt.bit.meetings.security.jwt.LoginFilter;
+import lt.bit.meetings.service.attendee.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
+
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    @Lazy
+    private LoginFilter loginFilter;
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationManager authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
-        return provider;
+        return new ProviderManager(provider);
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf().disable();
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                    .loginPage("/login")
-//                    .usernameParameter("email")
-//                    .passwordParameter("password")
-//                    .permitAll()
-//                    .defaultSuccessUrl("/dashboard", true)
-//                .and()
-//                .rememberMe()
-//                    .rememberMeParameter("remember-me")
-//
-//                .and()
-//                .authorizeRequests()
-//                .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-////                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
-//                    .clearAuthentication(true)
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("JSESSIONID", "remember-me")
-//                    .logoutSuccessUrl("/login").permitAll();
-
+        http.csrf().disable();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.addFilterAt(loginFilter, BasicAuthenticationFilter.class);
+        http.addFilterAt(jwtFilter, BasicAuthenticationFilter.class);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.exceptionHandling()
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().println(accessDeniedException.getMessage());
+                })
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().println(authException.getMessage());
+                });
         return http.build();
     }
 }
-
-//    public SecurityConfiguration(AuthSuccessHandler authSuccessHandler,
-//                                     AttendeeDetailsService attendeeDetailsService,
-//                                     @Value("${jwt.secret}") String secret) {
-//        this.authSuccessHandler = authSuccessHandler;
-//        this.attendeeDetailsService = attendeeDetailsService;
-//        this.secret = secret;
-//    }
-
-//    @Bean
-//    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception{
-//        JsonObjectAuthenticationFilter filter = new JsonObjectAuthenticationFilter();
-//        filter.setAuthenticationSuccessHandler(authSuccessHandler);
-//        filter.setAuthenticationManager(authenticationManager);
-//        return filter;
-//    }
-
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    private final AuthSuccessHandler authSuccessHandler;
-//    private final AttendeeDetailsService attendeeDetailsService;
-//    private final String secret;
-
-//                .cors()
-//                .and()
-//                .csrf().disable()
-//                .authorizeHttpRequests((auth) -> {
-//                            try {
-//                                auth
-//                                        .antMatchers("/").permitAll()
-//                                        .anyRequest()
-//                                        .authenticated()
-//                                        .and()
-//                                        .sessionManagement()
-//                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                                        .and()
-//                                        .addFilter(authenticationFilter())
-////                                        .addFilter(new JwtAuthorizationFilter(authenticationManager, attendeeDetailsService, secret))
-//                                        .exceptionHandling()
-//                                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-//
-//
-//                            } catch (Exception e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                        }
-//                        )
-//                .httpBasic(Customizer.withDefaults());
-//
-
 
 
 
