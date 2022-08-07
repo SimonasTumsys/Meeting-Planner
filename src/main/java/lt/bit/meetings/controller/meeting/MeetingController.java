@@ -1,13 +1,16 @@
 package lt.bit.meetings.controller.meeting;
 
+import lt.bit.meetings.exception.ApiException;
 import lt.bit.meetings.model.atendee.Attendee;
 import lt.bit.meetings.model.meeting.Meeting;
+import lt.bit.meetings.service.meeting.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import lt.bit.meetings.service.meeting.MeetingService;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -21,6 +24,7 @@ public class MeetingController {
     }
 
     @GetMapping("/get")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_RESPONSIBLEPERSON')")
     public ResponseEntity<List<Meeting>> getFilterMeetings(
             @RequestParam(name = "description", required = false) String desc,
             @RequestParam(name = "resId", required = false) Long resId,
@@ -55,10 +59,15 @@ public class MeetingController {
         if(countTo != null){
             meetings = meetingService.getMeetingsByNumberOfAttendeesTo(countTo, meetings);
         }
+
+        if(meetings.size() == 0){
+            throw new ApiException("No meetings found by these criteria!", 5000);
+        }
         return new ResponseEntity<>(meetings, HttpStatus.OK);
     }
 
     @PutMapping("/addAttendee/{meetingId}")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> addNewAttendeeToMeeting(
             @RequestBody Attendee attendee,
             @PathVariable("meetingId") Long meetingId){
@@ -68,15 +77,13 @@ public class MeetingController {
 
         switch (responseIndicator){
             case "responsibleInThisMeeting" -> {
-                return new ResponseEntity<>("Cannot add this attendee" +
-                    " because he/she is responsible for this meeting",
-                    HttpStatus.FORBIDDEN);
+                throw new ApiException("Cannot add this attendee" +
+                        " because he/she is responsible for this meeting", 4020);
             }
             case "responsibleInAnotherMeetingNow" -> {
-                return new ResponseEntity<>("Cannot add this attendee" +
+                throw new ApiException("Cannot add this attendee" +
                     " because he/she is responsible for another meeting, which is" +
-                    " overlapping with this one",
-                    HttpStatus.FORBIDDEN);
+                    " overlapping with this one", 4021);
             }
             case "success" -> {
                 String warningMessage = meetingService.
@@ -85,15 +92,15 @@ public class MeetingController {
                 return new ResponseEntity<>(warningMessage, HttpStatus.OK);
             }
             default -> {
-                return new ResponseEntity<>("The person you are trying to add" +
-                        " is already in this meeting", HttpStatus.FORBIDDEN);
+                throw new ApiException("The person you are trying to add" +
+                        " is already in this meeting", 4002);
             }
         }
-
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addNewMeeting(
+    @PreAuthorize("hasAuthority('meetings:write')")
+    public ResponseEntity<Meeting> addNewMeeting(
                         @RequestBody Meeting meetingToAdd){
         List<Meeting> allMeetings = meetingService.getAllMeetings();
         String responseIndicator =
@@ -101,24 +108,24 @@ public class MeetingController {
                         meetingToAdd, allMeetings);
         switch(responseIndicator){
             case "isResponsibleInOtherMeetingNow" -> {
-                return new ResponseEntity<>("Failed. The responsible person " +
-                        "of this meeting is responsible for another meeting " +
-                        "that is overlapping with this one",
-                        HttpStatus.FORBIDDEN);
+                throw new ApiException("Cannot create this meeting because responsible person" +
+                        " is responsible for another meeting, which is" +
+                        " overlapping with this one", 4022);
             }
             case "success" -> {
                 meetingService.addMeetingAfterChecks(meetingToAdd);
-                return new ResponseEntity<>("Meeting added successfully!",
+                return new ResponseEntity<>(meetingToAdd,
                         HttpStatus.OK);
             }
             default -> {
-                return new ResponseEntity<>("Meeting with this name already exists",
-                        HttpStatus.FORBIDDEN);
+                throw new ApiException("Meeting with this name already exists", 4001);
             }
         }
     }
 
+    //TODO - unauthorized exception handling
     @DeleteMapping("/delete/{meetingId}")
+    @PreAuthorize("hasAuthority('meetings:write')")
     public ResponseEntity<String> deleteMeeting(
             @PathVariable("meetingId") Long meetingId){
         boolean success = meetingService.deleteMeeting(meetingId);
@@ -126,20 +133,21 @@ public class MeetingController {
             return new ResponseEntity<>(
                    "Meeting deleted successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("No such meeting!", HttpStatus.BAD_REQUEST);
+        throw new ApiException("Meeting with this ID does not exist", 4003);
     }
 
+    //TODO respPerson cannot remove himself
     @PutMapping("/removeAttendee/{meetingId}")
-    public ResponseEntity<String> removePersonFromMeeting(
+    @PreAuthorize("hasAuthority('meetings:write')")
+    public ResponseEntity<Meeting> removePersonFromMeeting(
             @PathVariable("meetingId") Long meetingId,
             @RequestParam(name = "attendeeId") Long attendeeId){
         boolean success =
-                meetingService.removePersonFromMeeting(meetingId, attendeeId);
+                meetingService.removeAttendeeFromMeeting(meetingId, attendeeId);
         if(success){
-            return new ResponseEntity<>("Attendee removed successfully",
+            return new ResponseEntity<>(meetingService.getMeetingById(meetingId),
                     HttpStatus.OK);
         }
-        return new ResponseEntity<>("No such attendee in this meeting!",
-                HttpStatus.BAD_REQUEST);
+        throw new ApiException("Attendee with this ID does not exist", 4004);
     }
 }

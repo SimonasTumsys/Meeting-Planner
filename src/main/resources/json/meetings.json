@@ -7,7 +7,8 @@
     "surname" : "Einstein",
     "jobTitle" : "Patent Clerk",
     "email" : "albert.einstein@bit.lt",
-    "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu"
+    "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu",
+    "userRoles" : [ "ADMIN" ]
   },
   "description" : "Sprint start briefing",
   "category" : "CodeMonkey",
@@ -24,7 +25,8 @@
     "surname" : "Rand",
     "jobTitle" : "Philosopher",
     "email" : "ayn.rand@bit.lt",
-    "password" : "$2a$10$ta5l2688V7ZI6NDRDUJMQeICYSSDIiPq4ujtJyhOJ6zV.mdXnGu8G"
+    "password" : "$2a$10$ta5l2688V7ZI6NDRDUJMQeICYSSDIiPq4ujtJyhOJ6zV.mdXnGu8G",
+    "userRoles" : [ ]
   },
   "description" : "Coffee club",
   "category" : "TeamBuilding",
@@ -41,7 +43,8 @@
     "surname" : "Pacino",
     "jobTitle" : "Actor",
     "email" : "al.pacino@bit.lt",
-    "password" : "$2a$10$FvKaKYMkIv8N7COlZvNQ8ecakyddYt5HcPnJmTr9gwc3kojyXCz6S"
+    "password" : "$2a$10$FvKaKYMkIv8N7COlZvNQ8ecakyddYt5HcPnJmTr9gwc3kojyXCz6S",
+    "userRoles" : [ ]
   },
   "description" : "Coffee cappuccino drinkerino",
   "category" : "TeamBuilding",
@@ -58,7 +61,8 @@
     "surname" : "Obama",
     "jobTitle" : "POTUS",
     "email" : "barrack.obama@bit.lt",
-    "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG"
+    "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG",
+    "userRoles" : [ ]
   },
   "description" : "Tips and tricks",
   "category" : "Short",
@@ -75,7 +79,8 @@
     "surname" : "Freud",
     "jobTitle" : "Psychoanalytic",
     "email" : "sigmund.freud@bit.lt",
-    "password" : "$2a$10$iZS8BC2eQY1VaTBGI/A7uu71RkgH27l89/CYoB4BxsmZaPAakobQq"
+    "password" : "$2a$10$iZS8BC2eQY1VaTBGI/A7uu71RkgH27l89/CYoB4BxsmZaPAakobQq",
+    "userRoles" : [ ]
   },
   "description" : "Interpretation of Dreams",
   "category" : "Hub",
@@ -92,12 +97,21 @@
     "surname" : "Jung",
     "jobTitle" : "Analytic psychologist",
     "email" : "carl.jung@bit.lt",
-    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK"
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : ["RESPONSIBLEPERSON"]
   },
   "description" : "Archetypes",
   "category" : "Hub",
   "type" : "Live",
   "startDate" : [ 2022, 6, 10, 10, 0 ],
   "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ ]
+  } ]
 } ]

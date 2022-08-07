@@ -20,6 +20,7 @@ public class AttendeeController {
     }
 
     @GetMapping("/get")
+    @CrossOrigin
     public ResponseEntity<List<Attendee>> getAllAttendeesFromDb(){
         return new ResponseEntity<>(attendeeService.getAllAttendees(),
                 HttpStatus.OK);
