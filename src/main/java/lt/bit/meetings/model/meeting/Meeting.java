@@ -8,12 +8,7 @@ import lt.bit.meetings.model.atendee.Attendee;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 public class Meeting {
     private Long id;
     private String name;

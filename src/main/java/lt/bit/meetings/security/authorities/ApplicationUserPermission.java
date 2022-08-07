@@ -1,4 +1,4 @@
-package lt.bit.meetings.security;
+package lt.bit.meetings.security.authorities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

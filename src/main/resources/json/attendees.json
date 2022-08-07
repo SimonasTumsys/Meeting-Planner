@@ -25,11 +25,10 @@
 }, {
   "id" : 4,
   "name" : "Barrack",
-  "surname" : "Obama",
-  "jobTitle" : "POTUS",
+   "jobTitle" : "POTUS",
   "email" : "barrack.obama@bit.lt",
   "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG",
-  "userRoles": []
+  "userRoles": ["ATTENDEE"]
 }, {
   "id" : 5,
   "name" : "Sigmund",
@@ -61,7 +60,7 @@
   "jobTitle" : "Analytic psychologist",
   "email" : "carl.jung@bit.lt",
   "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
-  "userRoles": []
+  "userRoles": ["RESPONSIBLEPERSON"]
 }, {
   "id" : 9,
   "name" : "Marilyn",

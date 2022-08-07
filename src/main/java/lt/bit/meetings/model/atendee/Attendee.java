@@ -1,17 +1,12 @@
 package lt.bit.meetings.model.atendee;
 
 import lombok.*;
-import lt.bit.meetings.security.ApplicationUserRole;
+import lt.bit.meetings.security.authorities.ApplicationUserRole;
 
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 public class Attendee {
     private Long id;
     private String name;

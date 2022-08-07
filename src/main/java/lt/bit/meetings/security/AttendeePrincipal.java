@@ -2,13 +2,15 @@ package lt.bit.meetings.security;
 
 import lombok.AllArgsConstructor;
 import lt.bit.meetings.model.atendee.Attendee;
+import lt.bit.meetings.security.authorities.ApplicationUserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
+import java.util.Set;
 
 
 // NOT USED RN
@@ -21,8 +23,12 @@ public class AttendeePrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        Set<ApplicationUserRole> userRoles = attendee.getUserRoles();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        for(ApplicationUserRole role : userRoles){
+            authorities.addAll(role.getGrantedAuthorities());
+        }
+        return authorities;
     }
 
     @Override

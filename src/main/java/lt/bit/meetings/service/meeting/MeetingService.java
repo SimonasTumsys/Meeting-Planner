@@ -1,9 +1,12 @@
 package lt.bit.meetings.service.meeting;
 
 import lombok.AllArgsConstructor;
+import lt.bit.meetings.exception.ApiException;
 import lt.bit.meetings.model.atendee.Attendee;
 import lt.bit.meetings.model.meeting.Meeting;
 import lt.bit.meetings.repository.meeting.MeetingRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -140,14 +143,34 @@ public class MeetingService {
     }
 
     public boolean deleteMeeting(Long id){
+        boolean success = false;
         List<Meeting> meetings = getAllMeetings();
         for(Meeting meeting: meetings){
             if (id.equals(meeting.getId())){
-                return meetings.remove(meeting);
+                if(isLoggedInUserResponsible(meeting)){
+                    success = meetings.remove(meeting);
+                    meetingRepository.writeMeetingData(meetings);
+                    break;
+                } else {
+                    throw new ApiException(
+                            "Cannot delete meeting because you are not" +
+                                    "this meeting's responsible person", 4024);
+                }
             }
         }
-        meetingRepository.writeMeetingData(meetings);
-        return false;
+        return success;
+    }
+
+    private boolean isLoggedInUserResponsible(Meeting meeting){
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String currentUserEmail = ((UserDetails)principal).getUsername();
+            return meeting.getResponsiblePerson().getEmail().equals(currentUserEmail);
+        } else {
+            return false;
+        }
     }
 
     public boolean removeAttendeeFromMeeting(Long meetingId, Long id){

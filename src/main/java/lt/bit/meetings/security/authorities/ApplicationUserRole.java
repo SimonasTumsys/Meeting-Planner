@@ -1,14 +1,14 @@
-package lt.bit.meetings.security;
+package lt.bit.meetings.security.authorities;
 
 import com.google.common.collect.Sets;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lt.bit.meetings.security.authorities.ApplicationUserPermission;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static lt.bit.meetings.security.ApplicationUserPermission.*;
+import static lt.bit.meetings.security.authorities.ApplicationUserPermission.*;
 
 
 @Getter
@@ -25,12 +25,6 @@ public enum ApplicationUserRole {
         this.permissions = permissions;
     }
 
-    //TODO responsiblePerson role
-    ApplicationUserRole(Set<ApplicationUserPermission> permissions,
-                        Long userId, Long meetingId){
-        this.permissions = permissions;
-
-    }
 
     public Set<SimpleGrantedAuthority> getGrantedAuthorities(){
         Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
