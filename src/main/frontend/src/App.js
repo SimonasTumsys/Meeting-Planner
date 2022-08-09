@@ -5,10 +5,6 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Meetings from "./pages/Meetings";
 import Home from "./pages/Home";
-import AuthContext from "./context";
-import AuthService from "./service/AuthService";
-import PrivateRoute from "./components/PrivateRoute";
-
 import Navbar from "./components/Navbar";
 
 function App() {

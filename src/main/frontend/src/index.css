@@ -11,4 +11,8 @@
     @apply text-white border bg-green-700 border-green-700
         hover:bg-transparent hover:text-green-700 rounded-md;
   }
+
+  .custom_center_container {
+    @apply container w-screen flex items-center justify-center pt-40 mr-auto ml-auto;
+  }
 }

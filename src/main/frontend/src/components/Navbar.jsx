@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, setState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import logoImg from "../assets/meeting_planner_logo.png";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
   const [nav, setNav] = useState(false);
-  const handleClick = () => setNav(!nav);
+  const handleNavClick = () => setNav(!nav);
 
   return (
     <div className="w-screen h-[80px] z-10 bg-zinc-200 fixed drop-shadow-lg">
@@ -21,19 +21,18 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <ul className="hidden md:flex items-center">
             <li>Home</li>
+            <li>Calendar</li>
             <li>Your meetings</li>
             <li>Create meeting</li>
             <li>About</li>
-            <li>Logout</li>
           </ul>
         </div>
         <div className="hidden md:flex pr-4">
-          <button className="border-none bg-transparent text-black mr-4">
-            Sign In
+          <button className="px-8 py-3" onClick={props.updateAuth}>
+            Logout
           </button>
-          <button className="px-8 py-3">Sign Up</button>
         </div>
-        <div className="md:hidden" onClick={handleClick}>
+        <div className="md:hidden" onClick={handleNavClick}>
           {!nav ? (
             <MenuIcon className="w-6 mr-6" />
           ) : (
@@ -52,15 +51,14 @@ const Navbar = () => {
         }
       >
         <li className="border-b-2 border-zinc-300 w-full">Home</li>
+        <li className="border-b-2 border-zinc-300 w-full">Calendar</li>
         <li className="border-b-2 border-zinc-300 w-full">Your meetings</li>
         <li className="border-b-2 border-zinc-300 w-full">Create meeting</li>
         <li className="border-b-2 border-zinc-300 w-full">About</li>
-        <li className="border-b-2 border-zinc-300 w-full">Logout</li>
         <div className="flex flex-col my-4">
-          <button className="bg-transparent border-black text-black px-8 py-3 mb-4 hover:border-green-700">
-            Sign In
+          <button className="px-8 py-3" onClick={props.updateAuth}>
+            Logout
           </button>
-          <button className="px-8 py-3">Sign Up</button>
         </div>
       </ul>
     </div>
