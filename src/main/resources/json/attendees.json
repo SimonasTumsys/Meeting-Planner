@@ -25,7 +25,8 @@
 }, {
   "id" : 4,
   "name" : "Barrack",
-   "jobTitle" : "POTUS",
+  "surname" : "Obama",
+  "jobTitle" : "POTUS",
   "email" : "barrack.obama@bit.lt",
   "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG",
   "userRoles": ["ATTENDEE"]
