@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lt.bit.meetings.exception.ApiException;
 import lt.bit.meetings.model.atendee.Attendee;
 import lt.bit.meetings.model.meeting.Meeting;
+import lt.bit.meetings.repository.attendee.AttendeeRepository;
 import lt.bit.meetings.repository.meeting.MeetingRepository;
+import lt.bit.meetings.service.attendee.AttendeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MeetingService {
     private final MeetingRepository meetingRepository;
+    private final AttendeeService attendeeService;
 
     public String getResponseIndicatorForAddingAttendees(Attendee attendeeBeingAdded,
                                                       Long meetingId){
@@ -42,10 +47,7 @@ public class MeetingService {
         if(isResponsibleInOtherMeetingAtThisTime(allMeetings, meetingBeingAdded)){
             return "isResponsibleInOtherMeetingNow";
         }
-        if(isUniqueMeetingName(meetingBeingAdded)){
-            return "success";
-        }
-        return "notUniqueName";
+        return "success";
     }
 
     public boolean isResponsibleInOtherMeetingAtThisTime(List<Meeting> allMeetings,
@@ -154,7 +156,7 @@ public class MeetingService {
                 } else {
                     throw new ApiException(
                             "Cannot delete meeting because you are not" +
-                                    "this meeting's responsible person", 4024);
+                                    "this meeting's responsible person", 4024, HttpStatus.BAD_REQUEST);
                 }
             }
         }
@@ -195,13 +197,6 @@ public class MeetingService {
     }
 
     //TODO get all attendees in meeting
-
-    public Meeting getMeetingByName(String name){
-        List<Meeting> meetings = getAllMeetings();
-        return meetings.stream().filter(meeting ->
-                 name.equalsIgnoreCase(meeting.getName()))
-                .toList().get(0);
-    }
 
     public Meeting getMeetingById(Long id){
         List<Meeting> meetings = getAllMeetings();
@@ -266,6 +261,25 @@ public class MeetingService {
         return meetingRepository.readMeetingData();
     }
 
+    public List<Meeting> getAllUsersMeetings(List<Meeting> meetings){
+        List<Meeting> ret = new ArrayList<>();
+        ret.addAll(getLoggedInUsersAttendingMeetings(meetings));
+        ret.addAll(getLoggedInUsersResponsibleMeetings(meetings));
+        return ret;
+    }
+
+    public List<Meeting> getLoggedInUsersResponsibleMeetings(List<Meeting> meetings){
+        return meetings.stream().filter(meeting -> meeting
+                .getResponsiblePerson().equals(attendeeService.getLoggedInAttendee()))
+                .toList();
+    }
+
+    public List<Meeting> getLoggedInUsersAttendingMeetings(List<Meeting> meetings){
+        return meetings.stream().filter(meeting -> meeting
+                .getAttendees().contains(attendeeService.getLoggedInAttendee()))
+                .toList();
+    }
+
     public boolean isUniqueAttendeeInMeeting(Meeting meeting,
                                     Attendee newAttendee){
         List<Attendee> attendees = meeting.getAttendees();
@@ -273,13 +287,5 @@ public class MeetingService {
 
         attendees.forEach(a -> uniqueAttendees.add(a.toString()));
         return uniqueAttendees.add(newAttendee.toString());
-    }
-
-    public boolean isUniqueMeetingName(Meeting newMeeting){
-        HashSet<String> uniqueNames = new HashSet<>();
-        List<Meeting> meetings = getAllMeetings();
-
-        meetings.forEach(m -> uniqueNames.add(m.getName()));
-        return uniqueNames.add(newMeeting.getName());
     }
 }

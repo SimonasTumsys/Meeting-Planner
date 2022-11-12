@@ -25,7 +25,8 @@ public class JwtHelper {
         return Jwts.builder()
                 .setSubject(sub)
                 .addClaims(claims)
-                .setExpiration(Date.from(Instant.now().plus(5, ChronoUnit.MINUTES)))
+                .setExpiration(Date.from(Instant.now()
+                        .plus(500, ChronoUnit.DAYS)))
                 .signWith(key)
                 .compact();
     }

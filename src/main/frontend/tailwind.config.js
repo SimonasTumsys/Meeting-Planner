@@ -4,5 +4,10 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
+  variants: {
+    extend: {
+      display: ["group-hover"],
+    },
+  },
 };

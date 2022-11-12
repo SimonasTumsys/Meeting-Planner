@@ -2,25 +2,20 @@ package lt.bit.meetings.security;
 
 import lt.bit.meetings.security.jwt.JwtFilter;
 import lt.bit.meetings.security.jwt.LoginFilter;
-import lt.bit.meetings.service.attendee.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +44,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http)
+            throws Exception {
 
         http.csrf().disable();
         http.authorizeRequests().anyRequest().authenticated();

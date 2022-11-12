@@ -15,9 +15,7 @@ import static lt.bit.meetings.security.authorities.ApplicationUserPermission.*;
 public enum ApplicationUserRole {
     ATTENDEE(Sets.newHashSet()),
     RESPONSIBLEPERSON(Sets.newHashSet(MEETINGS_READ, MEETINGS_WRITE)),
-    ADMIN(Sets.newHashSet(
-            ATTENDEES_READ, ATTENDEES_WRITE,
-            MEETINGS_READ, MEETINGS_WRITE));
+    ADMIN(Sets.newHashSet());
 
     private final Set<ApplicationUserPermission> permissions;
 

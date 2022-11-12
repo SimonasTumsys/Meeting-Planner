@@ -11,6 +11,7 @@ public class Attendee {
     private Long id;
     private String name;
     private String surname;
+    private String profilePicture;
     private String jobTitle;
     private String email;
     private String password;

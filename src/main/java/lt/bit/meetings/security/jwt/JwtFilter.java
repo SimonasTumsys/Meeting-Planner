@@ -29,18 +29,24 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtHelper jwtHelper;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         String token = getToken(request);
         Map<String, Object> claims = jwtHelper.parseClaims(token);
-        SecurityContextHolder.getContext().setAuthentication(createAuthentication(claims));
+        SecurityContextHolder.getContext().setAuthentication(
+                createAuthentication(claims));
         filterChain.doFilter(request, response);
     }
 
     private Authentication createAuthentication(Map<String, Object> claims) {
-        List<SimpleGrantedAuthority> roles = Arrays.stream(claims.get("roles").toString().split(","))
+        List<SimpleGrantedAuthority> roles =
+                Arrays.stream(claims.get("roles")
+                .toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return new UsernamePasswordAuthenticationToken(claims.get(Claims.SUBJECT), null, roles);
+        return new UsernamePasswordAuthenticationToken(
+                claims.get(Claims.SUBJECT), null, roles);
     }
 
     private String getToken(HttpServletRequest request) {
@@ -51,7 +57,8 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request)
+            throws ServletException {
         return request.getRequestURI().startsWith("/login");
     }
 }

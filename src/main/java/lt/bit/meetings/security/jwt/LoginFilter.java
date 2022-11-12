@@ -27,13 +27,14 @@ public class LoginFilter extends OncePerRequestFilter {
     private final JwtHelper jwtHelper;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String username = request.getHeader("username");
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        String email = request.getHeader("email");
         String password = request.getHeader("password");
 
         Authentication authenticated = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-        );
+                new UsernamePasswordAuthenticationToken(email, password));
         response.setHeader(HttpHeaders.AUTHORIZATION, createJwtToken(authenticated));
     }
 
@@ -49,7 +50,8 @@ public class LoginFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String method = request.getMethod();
         String uri = request.getRequestURI();
-        boolean isLogin = HttpMethod.POST.matches(method) && uri.startsWith("/login");
+        boolean isLogin = HttpMethod.POST.matches(method)
+                && uri.startsWith("/login");
         return !isLogin;
     }
 }

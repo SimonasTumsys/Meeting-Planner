@@ -7,12 +7,50 @@
     @apply p-4;
   }
 
-  button {
+  .sessionButton {
     @apply text-white border bg-green-700 border-green-700
         hover:bg-transparent hover:text-green-700 rounded-md;
   }
 
   .custom_center_container {
     @apply container w-screen flex items-center justify-center pt-40 mr-auto ml-auto;
+  }
+
+  .filter-input-field {
+    @apply hover:border-yellow-400 focus:border-yellow-400 
+    focus:outline-none border-2 rounded px-3 py-1 w-full h-10;
+  }
+
+  .slider {
+    @apply relative w-56;
+  }
+
+  .slider__track,
+  .slider__range {
+    @apply rounded h-1 absolute;
+  }
+
+  .slider__track {
+    @apply bg-green-600 w-full z-10;
+  }
+
+  .slider__range {
+    @apply z-20 w-full;
+  }
+
+  .thumb {
+    @apply pointer-events-none, absolute, h-0, w-56, outline-none;
+  }
+
+  .thumb--zindex-3 {
+    @apply z-30;
+  }
+
+  .thumb--zindex-4 {
+    @apply z-40;
+  }
+
+  .thumb::-moz-range-thumb {
+    @apply bg-green-600;
   }
 }

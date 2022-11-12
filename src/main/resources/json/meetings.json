@@ -1,10 +1,11 @@
 [ {
   "id" : 1,
-  "name" : "mondayMorningMeeting",
+  "name" : "Deadlines are relative, too",
   "responsiblePerson" : {
     "id" : 1,
     "name" : "Albert",
     "surname" : "Einstein",
+    "profilePicture" : "https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/13/1394733862375/Albert-Einstein-sticks-hi-001.jpg",
     "jobTitle" : "Patent Clerk",
     "email" : "albert.einstein@bit.lt",
     "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu",
@@ -13,105 +14,307 @@
   "description" : "Sprint start briefing",
   "category" : "CodeMonkey",
   "type" : "Live",
-  "startDate" : [ 2022, 6, 6, 10, 0 ],
-  "endDate" : [ 2022, 6, 6, 11, 0 ],
+  "startDate" : [ 2022, 8, 15, 10, 0 ],
+  "endDate" : [ 2022, 8, 15, 11, 0 ],
   "attendees" : [ ]
 }, {
   "id" : 2,
-  "name" : "tuesdayMorningMeeting",
+  "name" : "Coffee with Ayn",
   "responsiblePerson" : {
     "id" : 2,
     "name" : "Ayn",
     "surname" : "Rand",
+    "profilePicture" : "https://media.newyorker.com/photos/5cf6a5eae7649469885b9959/16:9/w_1200,h_630,c_limit/Gessen-AynRand.jpg",
     "jobTitle" : "Philosopher",
     "email" : "ayn.rand@bit.lt",
     "password" : "$2a$10$ta5l2688V7ZI6NDRDUJMQeICYSSDIiPq4ujtJyhOJ6zV.mdXnGu8G",
-    "userRoles" : [ ]
+    "userRoles" : [ "ATTENDEE" ]
   },
   "description" : "Coffee club",
   "category" : "TeamBuilding",
   "type" : "InPerson",
-  "startDate" : [ 2022, 6, 7, 10, 0 ],
-  "endDate" : [ 2022, 6, 7, 11, 0 ],
+  "startDate" : [ 2022, 8, 16, 10, 0 ],
+  "endDate" : [ 2022, 8, 16, 11, 0 ],
   "attendees" : [ ]
 }, {
   "id" : 3,
-  "name" : "wednesdayMorningMeeting",
+  "name" : "Say hello to my little friend",
   "responsiblePerson" : {
     "id" : 3,
     "name" : "Al",
     "surname" : "Pacino",
+    "profilePicture" : "https://ilarge.lisimg.com/image/7959145/740full-al-pacino.jpg",
     "jobTitle" : "Actor",
     "email" : "al.pacino@bit.lt",
     "password" : "$2a$10$FvKaKYMkIv8N7COlZvNQ8ecakyddYt5HcPnJmTr9gwc3kojyXCz6S",
-    "userRoles" : [ ]
+    "userRoles" : [ "ATTENDEE" ]
   },
   "description" : "Coffee cappuccino drinkerino",
   "category" : "TeamBuilding",
   "type" : "InPerson",
-  "startDate" : [ 2022, 6, 8, 10, 0 ],
-  "endDate" : [ 2022, 6, 8, 11, 0 ],
+  "startDate" : [ 2022, 8, 17, 10, 0 ],
+  "endDate" : [ 2022, 8, 17, 11, 0 ],
   "attendees" : [ ]
 }, {
   "id" : 4,
-  "name" : "thursdayMorningMeeting",
+  "name" : "No, thank you!",
   "responsiblePerson" : {
     "id" : 4,
     "name" : "Barrack",
     "surname" : "Obama",
+    "profilePicture" : "https://images.newindianexpress.com/uploads/user/imagelibrary/2017/8/4/original/fapf22.jpg",
     "jobTitle" : "POTUS",
     "email" : "barrack.obama@bit.lt",
     "password" : "$2a$10$/S.Rt9k93QKyy02v2mNJ3uectAxpvqXi2eOlDiRsbPrwUZosA76LG",
-    "userRoles" : [ ]
+    "userRoles" : [ "ATTENDEE" ]
   },
   "description" : "Tips and tricks",
   "category" : "Short",
   "type" : "InPerson",
-  "startDate" : [ 2022, 6, 9, 10, 0 ],
-  "endDate" : [ 2022, 6, 9, 11, 0 ],
+  "startDate" : [ 2022, 8, 18, 10, 0 ],
+  "endDate" : [ 2022, 8, 18, 11, 0 ],
   "attendees" : [ ]
 }, {
   "id" : 5,
-  "name" : "fridayMorningMeeting",
+  "name" : "The dark side of your mom",
   "responsiblePerson" : {
     "id" : 5,
     "name" : "Sigmund",
     "surname" : "Freud",
+    "profilePicture" : "https://upvee.co/wp-content/uploads/2018/01/Freud_420a-1.jpg",
     "jobTitle" : "Psychoanalytic",
     "email" : "sigmund.freud@bit.lt",
     "password" : "$2a$10$iZS8BC2eQY1VaTBGI/A7uu71RkgH27l89/CYoB4BxsmZaPAakobQq",
-    "userRoles" : [ ]
+    "userRoles" : [ "ATTENDEE" ]
   },
   "description" : "Interpretation of Dreams",
   "category" : "Hub",
   "type" : "Live",
-  "startDate" : [ 2022, 6, 10, 10, 0 ],
-  "endDate" : [ 2022, 6, 10, 11, 0 ],
-  "attendees" : [ ]
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 1,
+    "name" : "Albert",
+    "surname" : "Einstein",
+    "profilePicture" : "https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/13/1394733862375/Albert-Einstein-sticks-hi-001.jpg",
+    "jobTitle" : "Patent Clerk",
+    "email" : "albert.einstein@bit.lt",
+    "password" : "$2a$10$LDiWpvU9bFfxPnCQEmMW7e.9tjjY61WQdSxPPrWi0X7B4.OBSkAtu",
+    "userRoles" : [ "ADMIN" ]
+  } ]
 }, {
   "id" : 6,
-  "name" : "fridayMorningMeeting2",
+  "name" : "Phallus extendicus",
   "responsiblePerson" : {
     "id" : 8,
     "name" : "Carl",
     "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
     "jobTitle" : "Analytic psychologist",
     "email" : "carl.jung@bit.lt",
     "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
-    "userRoles" : ["RESPONSIBLEPERSON"]
+    "userRoles" : [ "ATTENDEE" ]
   },
   "description" : "Archetypes",
   "category" : "Hub",
   "type" : "Live",
-  "startDate" : [ 2022, 6, 10, 10, 0 ],
-  "endDate" : [ 2022, 6, 10, 11, 0 ],
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
   "attendees" : [ {
     "id" : 11,
     "name" : "Theresa",
     "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
     "jobTitle" : "Prime minister",
     "email" : "theresa.may@bit.lt",
     "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
-    "userRoles" : [ ]
+    "userRoles" : [ "ATTENDEE" ]
   } ]
+}, {
+  "id" : 7,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 8,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 9,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 10,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 11,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 12,
+  "name" : "Phallus extendicus",
+  "responsiblePerson" : {
+    "id" : 8,
+    "name" : "Carl",
+    "surname" : "Jung",
+    "profilePicture" : "http://3.bp.blogspot.com/-wYqvOo-VV38/Uag8YgMM_VI/AAAAAAAAJLY/8zhMNH3Ue9w/s1600/carl-jung.jpg",
+    "jobTitle" : "Analytic psychologist",
+    "email" : "carl.jung@bit.lt",
+    "password" : "$2a$10$pcNlzuXEM6Jd/5k/clDMuukgNmD.MGc6XfuA5ZAvQ72dfNtxT5DTK",
+    "userRoles" : [ "ATTENDEE" ]
+  },
+  "description" : "Archetypes",
+  "category" : "Hub",
+  "type" : "Live",
+  "startDate" : [ 2022, 8, 19, 10, 0 ],
+  "endDate" : [ 2022, 8, 19, 11, 0 ],
+  "attendees" : [ {
+    "id" : 11,
+    "name" : "Theresa",
+    "surname" : "May",
+    "profilePicture" : "https://pressgazette.co.uk/wp-content/uploads/2016/08/Theresa-May-2-REUTERS-e1470304598687.jpg",
+    "jobTitle" : "Prime minister",
+    "email" : "theresa.may@bit.lt",
+    "password" : "$2a$10$AasvdqOh4uvKItEfdstpaO43OZWFurCW5/KNILo4SpdRDeDWHmexi",
+    "userRoles" : [ "ATTENDEE" ]
+  } ]
+}, {
+  "id" : 13,
+  "name" : "test2",
+  "responsiblePerson" : {
+    "id" : 10,
+    "name" : "J.K.",
+    "surname" : "Rowling",
+    "profilePicture" : null,
+    "jobTitle" : "Novelist",
+    "email" : "jk.rowling@bit.lt",
+    "password" : "$2a$10$kkLxgjqsXiDppbvId32nMeACw0Wa1RrpZ3kL7ASmUvHrLf1OgRjDu",
+    "userRoles" : null
+  },
+  "description" : "Foosball and chill",
+  "category" : "Short",
+  "type" : "InPerson",
+  "startDate" : [ 2022, 6, 9, 10, 30 ],
+  "endDate" : [ 2022, 6, 9, 11, 30 ],
+  "attendees" : [ ]
 } ]

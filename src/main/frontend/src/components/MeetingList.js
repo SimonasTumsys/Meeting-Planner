@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 const MeetingList = () => {
   const [meetings, setMeetings] = useState([]);
-  const token = "Bearer " + sessionStorage.getItem("jwt");
+  const token = "Bearer " + localStorage.getItem("jwt");
 
   useEffect(() => {
-    fetch("/meeting/get", {
+    fetch("/meeting", {
       method: "GET",
       headers: { Authorization: token },
       "Content-Type": "application/json",

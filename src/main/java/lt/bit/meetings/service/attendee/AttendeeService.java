@@ -3,7 +3,10 @@ package lt.bit.meetings.service.attendee;
 import lombok.AllArgsConstructor;
 import lt.bit.meetings.model.atendee.Attendee;
 import lt.bit.meetings.repository.attendee.AttendeeRepository;
+import lt.bit.meetings.security.authorities.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -69,5 +72,22 @@ public class AttendeeService {
             }
         }
         return false;
+    }
+
+    public boolean isUserAdmin(){
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String currentUserEmail = ((UserDetails)principal).getUsername();
+            Attendee attendee = getAttendeeByEmail(currentUserEmail);
+            return attendee.getUserRoles().contains(ApplicationUserRole.ADMIN);
+        }
+        return false;
+    }
+
+    public Attendee getLoggedInAttendee(){
+        Object email = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return getAttendeeByEmail((String) email);
     }
 }

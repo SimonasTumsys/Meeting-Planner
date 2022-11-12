@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(new Date(),
                 exception.getMessage(),
                 request.getDescription(false), exception.getApiErrorCode());
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetails, exception.getHttpStatus());
     }
 
     //handle global exceptions
